@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TLS Finanz · Investment Setting Call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --bg-2: #111114;
+  --bg-3: #16161b;
+  --bg-4: #1c1c22;
+  --border: #25252c;
+  --border-soft: #1d1d22;
+  --text: #f5f5f7;
+  --text-muted: #9a9aa3;
+  --text-dim: #5a5a63;
+  --gold: #d4af37;
+  --gold-soft: #b89630;
+  --green: #4fb783;
+  --red: #e04545;
+  --blue: #5b9bd5;
+  --purple: #b07cd4;
+  --orange: #e89c5c;
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr 360px;
+  min-height: 100vh;
+}
+
+.nav {
+  background: var(--bg-2);
+  border-right: 1px solid var(--border-soft);
+  padding: 28px 22px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.brand-sub {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 22px 0 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  margin: 2px -12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.nav-item:hover { background: var(--bg-3); color: var(--text); }
+.nav-item.active { background: var(--bg-3); color: var(--gold); }
+
+.nav-num {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--gold);
+  min-width: 22px;
+}
+
+.mode-toggle {
+  display: flex;
+  background: var(--bg-3);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-soft);
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.mode-btn.active { background: var(--gold); color: #000; }
+
+.main {
+  padding: 50px 56px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.phase-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.phase-title {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 28px;
+}
+
+.tone-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.tone-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.tone-HUMORVOLL  { color: var(--orange); border-color: rgba(232,156,92,0.4); background: rgba(232,156,92,0.08); }
+.tone-LOCKER     { color: var(--green);  border-color: rgba(79,183,131,0.4); background: rgba(79,183,131,0.08); }
+.tone-RUHIG      { color: var(--blue);   border-color: rgba(91,155,213,0.4); background: rgba(91,155,213,0.08); }
+.tone-NEUGIERIG  { color: var(--purple); border-color: rgba(176,124,212,0.4); background: rgba(176,124,212,0.08); }
+.tone-BESORGT    { color: var(--red);    border-color: rgba(224,69,69,0.4);  background: rgba(224,69,69,0.08); }
+.tone-VERWIRRT   { color: var(--orange); border-color: rgba(232,156,92,0.4); background: rgba(232,156,92,0.08); }
+.tone-KLAR       { color: var(--gold);   border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.08); }
+.tone-EUPHORISCH { color: var(--gold);   border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.12); }
+.tone-AUTHENTISCH{ color: var(--blue);   border-color: rgba(91,155,213,0.4); background: rgba(91,155,213,0.08); }
+
+.block {
+  margin-bottom: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.block:hover { border-color: var(--border); }
+
+.block-head {
+  padding: 14px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.block-head:hover { background: var(--bg-3); }
+
+.block-head-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.block-preview {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.block-chevron {
+  color: var(--text-dim);
+  font-size: 11px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.block.open .block-chevron { transform: rotate(180deg); color: var(--gold); }
+
+.block-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 18px;
+  border-top: 1px solid transparent;
+}
+
+.block.open .block-body {
+  max-height: 1400px;
+  padding: 18px;
+  border-top-color: var(--border-soft);
+}
+
+.block-full {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text);
+  font-weight: 300;
+}
+
+.block-full strong { font-weight: 600; color: var(--gold); }
+
+.pause-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 3px 9px;
+  background: var(--bg-3);
+  border-radius: 4px;
+  margin: 6px 0;
+  border: 1px dashed var(--border);
+}
+
+.pause-marker::before { content: "❚❚"; color: var(--gold); font-size: 8px; }
+
+.why-box {
+  background: rgba(212, 175, 55, 0.05);
+  border-left: 2px solid var(--gold);
+  padding: 12px 16px;
+  border-radius: 0 6px 6px 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 14px;
+}
+
+.why-box strong { color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+
+.phase-goal {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  background: var(--bg-2);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  line-height: 1.7;
+}
+
+.phase-goal strong { color: var(--gold); font-weight: 600; }
+
+.aside {
+  background: var(--bg-2);
+  border-left: 1px solid var(--border-soft);
+  padding: 28px 22px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.aside-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.aside-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 10px 6px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.aside-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.aside-section { display: none; }
+.aside-section.active { display: block; }
+
+.aside-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.aside-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.einwand {
+  background: var(--bg-3);
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  margin-bottom: 9px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.einwand:hover { border-color: var(--gold-soft); }
+
+.einwand-head {
+  padding: 11px 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.einwand-num {
+  background: var(--gold);
+  color: #000;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.einwand-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  letter-spacing: 0.3px;
+}
+
+.einwand-chevron {
+  color: var(--text-dim);
+  font-size: 10px;
+  transition: transform 0.3s;
+}
+
+.einwand.open .einwand-chevron { transform: rotate(180deg); color: var(--gold); }
+
+.einwand-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 13px;
+}
+
+.einwand.open .einwand-body { max-height: 600px; padding: 0 13px 13px; }
+
+.einwand-q {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--green);
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  background: rgba(79, 183, 131, 0.06);
+  border-radius: 6px;
+  border-left: 2px solid var(--green);
+  line-height: 1.5;
+}
+
+.einwand-a {
+  font-size: 12.5px;
+  color: var(--text);
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  background: rgba(212, 175, 55, 0.06);
+  border-radius: 6px;
+  border-left: 2px solid var(--gold);
+  line-height: 1.6;
+}
+
+.einwand-tech {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-style: italic;
+  letter-spacing: 0.3px;
+  padding: 0 4px;
+}
+
+.lead-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.lead-select {
+  flex: 1;
+  background: var(--bg-3);
+  border: 1px solid var(--border-soft);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+}
+
+.lead-btn {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+
+.lead-btn:hover { background: var(--gold-soft); }
+.lead-btn.secondary { background: var(--bg-3); color: var(--text); border: 1px solid var(--border-soft); }
+
+.note-field { margin-bottom: 12px; }
+
+.note-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.note-input, .note-area {
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border-soft);
+  color: var(--text);
+  padding: 9px 11px;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.note-input:focus, .note-area:focus { outline: none; border-color: var(--gold); }
+.note-area { min-height: 55px; }
+
+.note-actions { display: flex; gap: 8px; margin-top: 14px; }
+
+.save-indicator {
+  font-size: 10px;
+  color: var(--green);
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.save-indicator.show { opacity: 1; }
+
+.tonal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.tonal-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.tonal-card-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.tonal-card-text {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.merksatz {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-style: italic;
+  color: var(--gold);
+  text-align: center;
+  padding: 22px;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  margin: 24px 0;
+  line-height: 1.5;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-soft); }
+
+@media (max-width: 1400px) {
+  .app { grid-template-columns: 230px 1fr 320px; }
+  .main { padding: 44px 36px; }
+}
+
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 1fr; }
+  .nav, .main, .aside { min-width: 0; }
+  .nav, .aside { position: relative; height: auto; }
+}
+
+@media (max-width: 480px) {
+  .nav, .aside { padding: 22px 16px; }
+  .main { padding: 34px 18px; }
+  .phase-title { font-size: 42px; }
+  .fund-grid { grid-template-columns: 1fr; }
+}
+
+.phase-content { animation: fadeIn 0.4s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(212, 175, 55, 0.05);
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.tip-dot { color: var(--gold); font-size: 16px; line-height: 1; margin-top: 2px; }
+
+.tone-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── Klemmmuster / Munition (Üben-Modus) ── */
+.muster-box {
+  background: linear-gradient(180deg, rgba(212,175,55,0.07), rgba(212,175,55,0.02));
+  border: 1px solid rgba(212,175,55,0.28);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+.muster-eyebrow {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 7px;
+}
+.muster-eyebrow::before { content: "◆"; font-size: 8px; }
+.muster-text { font-size: 13.5px; line-height: 1.7; color: var(--text); }
+.munition-line {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(212,175,55,0.25);
+  font-size: 12.5px; line-height: 1.6; color: var(--text-muted);
+}
+.munition-line strong { color: var(--gold); font-weight: 700; letter-spacing: 0.4px; }
+.block-pattern {
+  display: none;
+  margin-top: 12px; font-size: 11.5px; line-height: 1.6; color: var(--blue);
+  background: rgba(91,155,213,0.07); border-left: 2px solid var(--blue);
+  padding: 9px 12px; border-radius: 0 6px 6px 0;
+}
+.block-pattern strong { color: var(--blue); font-weight: 700; }
+body.training-on .block-pattern { display: block; }
+
+/* ── Fundament ── */
+.fund-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+.fund-card {
+  background: var(--bg-2); border: 1px solid var(--border-soft);
+  border-radius: 12px; padding: 20px 22px;
+}
+.fund-card.wide { grid-column: 1 / -1; }
+.fund-card-title {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 14px; color: var(--gold);
+}
+.fund-card.is-good .fund-card-title { color: var(--green); }
+.fund-card.is-bad  .fund-card-title { color: var(--red); }
+.pill-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.pill-list li {
+  font-size: 13px; line-height: 1.5; color: var(--text); padding-left: 22px; position: relative;
+}
+.pill-list li::before {
+  content: ""; position: absolute; left: 0; top: 7px; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--gold);
+}
+.fund-card.is-good .pill-list li::before { background: var(--green); }
+.fund-card.is-bad  .pill-list li::before { content: "\u00d7"; background: none; color: var(--red); top: 0; font-size: 15px; font-weight: 700; line-height: 1; }
+.fund-formula-head {
+  font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--text);
+  text-align: center; margin-bottom: 16px; letter-spacing: -0.5px;
+}
+.fund-formula {
+  font-size: 14px; line-height: 1.9; color: var(--text-muted); text-align: center;
+  padding: 18px; background: var(--bg-3); border-radius: 10px; border: 1px dashed var(--border);
+}
+.fund-formula em { color: var(--gold); font-style: normal; font-weight: 600; }
+.psycho-point {
+  font-size: 14px; line-height: 1.6; color: var(--text); padding: 12px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.psycho-point:last-child { border-bottom: none; }
+.psycho-point strong { color: var(--gold); }
+
+/* ── Techniken ── */
+.technik { margin-bottom: 13px; border: 1px solid var(--border-soft); background: var(--bg-2); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+.technik:hover { border-color: var(--border); }
+.technik-head { padding: 15px 18px; cursor: pointer; display: flex; align-items: center; gap: 14px; user-select: none; }
+.technik-head:hover { background: var(--bg-3); }
+.technik-num {
+  font-family: var(--serif); font-size: 22px; font-weight: 600; min-width: 30px;
+  color: var(--gold); line-height: 1;
+}
+.technik-head-mid { flex: 1; }
+.technik-name { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: 0.2px; }
+.technik-zweck { font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
+.technik-chevron { color: var(--text-dim); font-size: 11px; transition: transform 0.3s; }
+.technik.open .technik-chevron { transform: rotate(180deg); color: var(--gold); }
+.technik-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; padding: 0 18px; }
+.technik.open .technik-body { max-height: 900px; padding: 4px 18px 18px; }
+.tk-row { margin-bottom: 12px; }
+.tk-label { font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 5px; }
+.tk-aufbau { font-size: 14px; color: var(--text); font-style: italic; line-height: 1.6; }
+.tk-beispiel { font-size: 13.5px; line-height: 1.7; color: var(--text); padding: 11px 14px; background: var(--bg-3); border-radius: 8px; border-left: 2px solid var(--gold); }
+.tk-regel { font-size: 12.5px; line-height: 1.65; color: var(--text-muted); }
+.farbe-green  { color: var(--green); }  .technik.farbe-green  .technik-num,  .bd-green  { color: var(--green); }
+.farbe-orange { color: var(--orange); } .technik.farbe-orange .technik-num { color: var(--orange); }
+.farbe-blue   { color: var(--blue); }   .technik.farbe-blue   .technik-num { color: var(--blue); }
+.farbe-purple { color: var(--purple); } .technik.farbe-purple .technik-num { color: var(--purple); }
+.farbe-gold   { color: var(--gold); }   .technik.farbe-gold   .technik-num { color: var(--gold); }
+.farbe-teal   { color: #4cc6c0; }
+
+/* ── Einwand-Flow ── */
+.flow { position: relative; margin: 24px 0 8px; padding-left: 6px; }
+.flow-step { position: relative; padding: 0 0 4px 46px; margin-bottom: 4px; }
+.flow-line { position: absolute; left: 20px; top: 4px; bottom: -4px; width: 2px; background: var(--border); }
+.flow-step:last-child .flow-line { display: none; }
+.flow-dot {
+  position: absolute; left: 8px; top: 2px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-3); border: 2px solid var(--border); display: flex; align-items: center;
+  justify-content: center; font-size: 12px; font-weight: 700; color: var(--text); z-index: 2;
+}
+.flow-card { background: var(--bg-2); border: 1px solid var(--border-soft); border-radius: 11px; padding: 14px 17px; margin-bottom: 12px; }
+.flow-tech { font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+.flow-titel { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -0.2px; }
+.flow-text { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); }
+.tool-card { background: var(--bg-2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+.tool-name { font-family: var(--serif); font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+.info-band {
+  font-size: 13px; line-height: 1.7; color: var(--text-muted);
+  background: rgba(91,155,213,0.05); border: 1px solid rgba(91,155,213,0.2);
+  border-radius: 10px; padding: 16px 18px; margin: 18px 0;
+}
+.info-band strong { color: var(--blue); }
+.philo-band {
+  font-size: 13.5px; line-height: 1.75; color: var(--text); font-family: var(--serif);
+  font-style: italic; border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+  padding: 22px 4px; margin: 26px 0 8px;
+}
+.section-lead { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+
+/* ── Einwand-Konter: Gegenfrage-Fluss + Muster ── */
+.einwand.open .einwand-body { max-height: 1000px; }
+.einwand-a > div { margin: 3px 0; }
+.konter-step {
+  color: var(--gold); font-weight: 500; padding: 5px 0 5px 4px;
+  border-left: 2px solid var(--gold); padding-left: 9px; margin: 5px 0; background: rgba(212,175,55,0.05);
+}
+.konter-cue {
+  font-size: 10.5px; font-style: italic; color: var(--text-dim);
+  letter-spacing: 0.5px; padding: 2px 0; text-transform: uppercase;
+}
+.einwand-muster {
+  font-size: 11px; line-height: 1.6; color: var(--text-muted);
+  background: rgba(91,155,213,0.06); border: 1px solid rgba(91,155,213,0.18);
+  border-radius: 7px; padding: 9px 11px; margin-top: 9px;
+}
+.einwand-muster-label {
+  display: inline-block; font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--blue); margin-right: 7px;
+  border: 1px solid rgba(91,155,213,0.3); border-radius: 3px; padding: 1px 5px;
+}
+
+/* ── Lead-Notizen: Situations-Modul + Einwände ── */
+.note-module {
+  background: linear-gradient(180deg, rgba(212,175,55,0.07), rgba(212,175,55,0.02));
+  border: 1px solid rgba(212,175,55,0.28); border-radius: 10px;
+  padding: 13px 13px 14px; margin: 16px 0;
+}
+.note-module .note-label { color: var(--gold); }
+.note-module-hint {
+  font-size: 10.5px; line-height: 1.5; color: var(--text-muted); margin: 0 0 9px; font-style: italic;
+}
+.note-nebel {
+  font-size: 10.5px; line-height: 1.5; color: var(--blue); margin-top: 8px;
+  background: rgba(91,155,213,0.07); border-left: 2px solid var(--blue);
+  padding: 7px 9px; border-radius: 0 6px 6px 0;
+}
+.note-nebel strong { color: var(--blue); }
+
+/* ── Schlagfertig ── */
+.sf-cost { margin: 18px 0 6px; border: 1px solid var(--border-soft); border-radius: 11px; overflow: hidden; }
+.sf-cost-row { display: grid; grid-template-columns: 1fr 24px 1.2fr; align-items: center; gap: 8px; padding: 11px 15px; border-bottom: 1px solid var(--border-soft); }
+.sf-cost-row:last-child { border-bottom: none; }
+.sf-cost-row:nth-child(odd) { background: var(--bg-2); }
+.sf-cost-wer { font-size: 12.5px; color: var(--text); font-weight: 500; }
+.sf-cost-arrow { color: var(--red); font-weight: 700; text-align: center; }
+.sf-cost-folge { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+.sf-card { margin-bottom: 12px; border: 1px solid var(--border-soft); background: var(--bg-2); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+.sf-card:hover { border-color: var(--border); }
+.sf-head { padding: 14px 18px; cursor: pointer; display: flex; align-items: center; gap: 13px; user-select: none; }
+.sf-head:hover { background: var(--bg-3); }
+.sf-num { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--red); min-width: 26px; line-height: 1; }
+.sf-name { flex: 1; font-size: 15px; font-weight: 600; color: var(--text); }
+.sf-card.open .technik-chevron { transform: rotate(180deg); color: var(--gold); }
+.sf-body { max-height: 0; overflow: hidden; transition: max-height 0.45s ease, padding 0.45s ease; padding: 0 18px; }
+.sf-card.open .sf-body { max-height: 1200px; padding: 4px 18px 18px; }
+.sf-block { border-radius: 9px; padding: 11px 13px; margin: 8px 0; }
+.sf-prospect { background: rgba(224,69,69,0.07); border: 1px solid rgba(224,69,69,0.22); }
+.sf-du { background: rgba(79,183,131,0.07); border: 1px solid rgba(79,183,131,0.22); }
+.sf-tag { display: inline-block; font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-bottom: 7px; }
+.sf-tag-p { background: var(--red); color: #fff; }
+.sf-tag-d { background: var(--green); color: #06231a; }
+.sf-line { font-size: 13.5px; line-height: 1.65; color: var(--text); margin: 4px 0; }
+.sf-prospect .sf-line { font-style: italic; }
+.sf-regel { font-size: 12px; color: var(--red); margin: 10px 0 4px; opacity: 0.85; }
+.sf-technik { font-size: 12.5px; color: var(--text); margin: 8px 0; }
+.sf-technik-label { display: inline-block; font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(212,175,55,0.35); border-radius: 4px; padding: 1px 6px; margin-right: 8px; }
+.sf-effekt { font-size: 12.5px; line-height: 1.6; color: var(--gold); background: rgba(212,175,55,0.06); border-left: 2px solid var(--gold); padding: 9px 12px; border-radius: 0 6px 6px 0; margin-top: 10px; }
+.sf-train { border: 1px solid var(--border-soft); border-radius: 11px; overflow: hidden; }
+.sf-train-row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 13px 16px; border-bottom: 1px solid var(--border-soft); }
+.sf-train-row:last-child { border-bottom: none; }
+.sf-train-tag { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+.sf-train-text { font-size: 12.5px; line-height: 1.55; color: var(--text-muted); }
+
+/* ── Conversation Operator System ── */
+.operator-rule {
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  background: rgba(212, 175, 55, 0.05);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 9px 11px;
+  margin-bottom: 12px;
+}
+.operator-rule strong { color: var(--gold); font-weight: 700; }
+.operator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.operator-btn {
+  background: var(--bg-3);
+  color: var(--text);
+  border: 1px solid var(--border-soft);
+  border-radius: 7px;
+  padding: 9px 8px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.operator-btn:hover,
+.operator-btn.active {
+  border-color: var(--gold-soft);
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+}
+.operator-btn.philosophy {
+  grid-column: 1 / -1;
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+.operator-btn.philosophy:hover,
+.operator-btn.philosophy.active {
+  background: var(--gold-soft);
+  color: #000;
+}
+.operator-result {
+  background: var(--bg-3);
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  padding: 13px;
+  min-height: 160px;
+}
+.operator-empty {
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+  padding: 34px 6px;
+}
+.operator-kicker {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.operator-method {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1.1;
+  margin-bottom: 9px;
+}
+.operator-goal {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-soft);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.operator-goal strong { color: var(--gold); font-weight: 600; }
+.operator-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.operator-list li {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text);
+  padding-left: 15px;
+  position: relative;
+}
+.operator-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.operator-merk {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--green);
+  background: rgba(79,183,131,0.06);
+  border-left: 2px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 8px 10px;
+  font-style: italic;
+}
+@media (max-width: 360px) {
+  .operator-grid { grid-template-columns: 1fr; }
+  .operator-btn.philosophy { grid-column: auto; }
+}
+
+@media (max-width: 480px) {
+  .nav, .aside { padding: 22px 16px; }
+  .main { padding: 34px 18px; }
+  .phase-title { font-size: 42px; }
+  .fund-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="nav">
+    <div class="brand">TLS Finanz</div>
+    <div class="brand-sub">Setting Call</div>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="live">Live</button>
+      <button class="mode-btn" data-mode="training">Üben</button>
+    </div>
+
+    <div class="nav-label">Grundlagen</div>
+    <div class="nav-item" data-view="fundament">
+      <span class="nav-num">◆</span> Fundament
+    </div>
+
+    <div class="nav-label">Der Call</div>
+    <div id="nav-phases"></div>
+
+    <div class="nav-label">Werkzeuge</div>
+    <div class="nav-item" data-view="techniken">
+      <span class="nav-num">✦</span> 10 Techniken
+    </div>
+    <div class="nav-item" data-view="einwandsystem">
+      <span class="nav-num">⚔</span> Einwand-System
+    </div>
+    <div class="nav-item" data-view="schlagfertig">
+      <span class="nav-num">⚡</span> Schlagfertig
+    </div>
+
+    <div class="nav-label">Bonus</div>
+    <div class="nav-item" data-phase="tonality">
+      <span class="nav-num">★</span> Tonalität
+    </div>
+  </nav>
+
+  <main class="main">
+    <div id="phase-content"></div>
+  </main>
+
+  <aside class="aside">
+    <div class="aside-tabs">
+      <button class="aside-tab active" data-aside="einwand">Einwand-Konter</button>
+      <button class="aside-tab" data-aside="notes">Lead-Notizen</button>
+      <button class="aside-tab" data-aside="operator">Operator</button>
+    </div>
+
+    <section class="aside-section active" data-section="einwand">
+      <div class="aside-title">Schlagfertig</div>
+      <div class="aside-sub">Klick → Konter erscheint. Lerne wörtlich.</div>
+      <div id="einwand-list"></div>
+    </section>
+
+    <section class="aside-section" data-section="notes">
+      <div class="aside-title">Lead-Notizen</div>
+      <div class="aside-sub">Wird pro Lead gespeichert.</div>
+
+      <div class="lead-selector">
+        <select id="lead-select" class="lead-select"></select>
+        <button class="lead-btn" id="new-lead">+ Neu</button>
+      </div>
+
+      <div class="note-field">
+        <label class="note-label">Name</label>
+        <input type="text" class="note-input" id="note-name" placeholder="z.B. Elvir M.">
+      </div>
+      <div class="note-field">
+        <label class="note-label">Beruf / Status</label>
+        <input type="text" class="note-input" id="note-job" placeholder="Was macht er beruflich?">
+      </div>
+      <div class="note-field">
+        <label class="note-label">Finanzielle Situation</label>
+        <textarea class="note-area" id="note-finance" placeholder="Einkommen, Sparrate..."></textarea>
+      </div>
+      <div class="note-field">
+        <label class="note-label">Aktuelle Investments</label>
+        <textarea class="note-area" id="note-invest" placeholder="MSCI World, Tech, Krypto..."></textarea>
+      </div>
+      <div class="note-field">
+        <label class="note-label">Größte Unsicherheit</label>
+        <textarea class="note-area" id="note-pain" placeholder="Sein Pain Point wörtlich"></textarea>
+      </div>
+
+      <div class="note-module">
+        <label class="note-label">★ Seine Situation — in DEINEN Worten</label>
+        <div class="note-module-hint">Beschreibe seine Lage besser, als er es selbst kann. Genau hier kommt das Commitment — wenn er denkt „so genau hab ich das selbst noch nie gesehen", stimmt er dir auf einmal zu.</div>
+        <textarea class="note-area" id="note-situation" placeholder="z.B. Du investierst seit 3 Monaten, kaufst nach Bauchgefühl, was du auf TikTok siehst — aber innerlich vertraust du deinem Depot nicht und checkst es täglich aus Angst etwas falsch zu machen..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="note-field">
+        <label class="note-label">Ziel / Motivation</label>
+        <textarea class="note-area" id="note-goal" placeholder="Warum investiert er?"></textarea>
+      </div>
+
+      <div class="note-module">
+        <label class="note-label">⚑ Einwände, die kamen</label>
+        <div class="note-module-hint">Jeden Einwand wörtlich festhalten — bei Future Pacing, Pain Digging oder Abschluss.</div>
+        <textarea class="note-area" id="note-einwaende" placeholder="z.B. „zu teuer", „muss mit Frau reden", „keine Zeit"..." style="min-height:70px;"></textarea>
+        <div class="note-nebel"><strong>Nebeltechnik →</strong> „Gibt es außer [das, was er gerade nannte] noch einen Punkt, der dich hält?" — erst ALLE Einwände holen, dann der Reihe nach behandeln.</div>
+      </div>
+
+      <div class="note-field">
+        <label class="note-label">Persönliches (für Champagner-Moment)</label>
+        <textarea class="note-area" id="note-personal" placeholder="Familie, Hobbys, Lebenssituation"></textarea>
+      </div>
+      <div class="note-field">
+        <label class="note-label">Termin gesetzt</label>
+        <input type="text" class="note-input" id="note-termin" placeholder="Tag + Uhrzeit">
+      </div>
+
+      <div class="note-actions">
+        <button class="lead-btn" id="save-lead">Speichern</button>
+        <button class="lead-btn secondary" id="delete-lead">Löschen</button>
+      </div>
+      <div class="save-indicator" id="save-indicator">Gespeichert</div>
+    </section>
+
+    <section class="aside-section" data-section="operator">
+      <div class="aside-title">Conversation Operator</div>
+      <div class="aside-sub">Antwort-Typ klicken → Methode nutzen.</div>
+      <div class="operator-rule"><strong>Regel:</strong> Nicht Inhalt analysieren. Denkweise erkennen. Methode wählen.</div>
+      <div class="operator-grid" id="operator-buttons"></div>
+      <div class="operator-result" id="operator-result">
+        <div class="operator-empty">Wähle die Antwort des Leads.</div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script>
+const PHASES = [
+  {
+    id: "1",
+    title: "Einstieg",
+    nav: "Einstieg",
+    goal: "Atmosphäre öffnen. Frame setzen: kein Verkauf, sondern gemeinsames Anschauen. Erste Frage öffnet ihn.",
+    blocks: [
+      {
+        tones: ["HUMORVOLL"],
+        preview: "Hey [NAME], grüß dich erstmal. Wie läuft dein Tag bisher?",
+        full: "Hey [NAME], grüß dich erstmal.\nWie läuft dein Tag bisher?\n[PAUSE]\nPerfekt.",
+        why: "Lockerer Einstieg. Keine Hast. Du startest auf Augenhöhe."
+      },
+      {
+        tones: ["LOCKER", "RUHIG"],
+        preview: "Ganz kurz vorab auch: Ich will dir heute erstmal nichts verkaufen.",
+        full: "Ganz kurz vorab auch:\nIch will dir heute erstmal nichts verkaufen.\n[PAUSE]",
+        why: "Du nimmst sofort den Verkaufsdruck raus. Ab jetzt fühlt er sich nicht mehr bedroht."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Ich möchte mir einfach mal anschauen, wie du aktuell investierst...",
+        full: "Ich möchte mir einfach mal anschauen,\nwie du aktuell investierst,\nwie dein Depot aufgebaut ist\nund ob da wirklich schon eine klare Strategie dahinter steckt.\n[PAUSE]",
+        why: "Klares Ziel. Du übernimmst die Führung — ohne aufdringlich zu sein."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Viele investieren heutzutage zwar... aber wissen nicht wirklich warum.",
+        full: "Viele investieren heutzutage zwar schon …\naber wissen trotzdem nicht wirklich,\nwarum bestimmte ETFs oder Aktien überhaupt im Depot liegen.\n[PAUSE]\nUnd genau da entstehen später oft die größten Fehler.\n[PAUSE]",
+        why: "Problem allgemein framen. Er fühlt sich nicht angegriffen — aber du säst den Zweifel."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Hol mich mal kurz ab: Wie sieht's aktuell bei dir aus?",
+        full: "Hol mich mal kurz ab:\nWie sieht es aktuell bei dir beim Thema Investments aus?\n[PAUSE]",
+        why: "OFFENE FRAGE. Lass ihn reden. Alles was er sagt → Notizen rechts."
+      }
+    ],
+    tips: [
+      "Tonalität: ruhig, leicht erfreut, NICHT übertrieben energisch.",
+      "Schreibe SOFORT in Notizen rechts mit — Name, Stimmung, alles."
+    ]
+  },
+  {
+    id: "2",
+    title: "Qualifizierung",
+    nav: "Qualifizierung",
+    goal: "Konkret abklopfen. Seit wann, was, wie. Du sammelst Munition für Pain-Digging.",
+    blocks: [
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Seit wann beschäftigst du dich überhaupt mit Investments?",
+        full: "Seit wann beschäftigst du dich überhaupt mit Investments?\n[PAUSE]",
+        why: "Zeitrahmen einordnen. 2 Monate = Anfänger = perfekte Zielgruppe."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Investierst du eher in ETFs, Einzelaktien oder beides?",
+        full: "Und investierst du aktuell eher in ETFs, Einzelaktien oder beides?\n[PAUSE]",
+        why: "Konkret machen. Antwort → in Notizen rechts."
+      },
+      {
+        tones: ["VERWIRRT"],
+        preview: "Wie triffst du momentan deine Entscheidungen? TikTok, YouTube oder eigene Recherche?",
+        full: "Wie triffst du momentan deine Entscheidungen?\nTikTok, YouTube, Social Media oder eher eigene Recherche?\n[PAUSE]",
+        why: "WICHTIGE FRAGE. 9 von 10 sagen TikTok/YouTube. Das ist später dein Hebel."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Würdest du sagen, du hast eine klare Struktur hinter deinem Depot?",
+        full: "Und würdest du sagen,\ndu hast aktuell schon eine klare Struktur hinter deinem Depot?\n[PAUSE]",
+        why: "Die meisten sagen 'Nein'. Du hast den Befund — ohne ihn anzugreifen."
+      }
+    ],
+    tips: [
+      "Wenn er TikTok/YouTube sagt → später in Phase 3 darauf zurückkommen.",
+      "Wenn er 'keine Struktur' zugibt → das ist DEIN Moment."
+    ]
+  },
+  {
+    id: "3",
+    title: "Vorstellung",
+    nav: "Vorstellung",
+    goal: "Dich positionieren. Authentisch — nicht prahlerisch. Du teilst deinen Weg, um Vertrauen aufzubauen.",
+    blocks: [
+      {
+        tones: ["RUHIG", "AUTHENTISCH"],
+        preview: "Kurz zu mir auch: Ich hab mich selber früh mit Investments beschäftigt.",
+        full: "Kurz zu mir auch:\nIch hab mich selber schon früh mit Investments beschäftigt.\n[PAUSE]",
+        why: "Persönlicher Anker. Du bist kein Anzug-Verkäufer — du bist einer, der den Weg selbst gegangen ist."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Irgendwann hab ich gemerkt, dass online jeder etwas anderes erzählt.",
+        full: "Und irgendwann hab ich gemerkt,\ndass online jeder etwas anderes erzählt.\n[PAUSE]",
+        why: "Du spiegelst seinen Schmerz — den er gerade in Phase 2 zugegeben hat."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Der eine sagt ETFs. Der nächste Einzelaktien. Dann Krypto. Dann Trends.",
+        full: "Der eine sagt ETFs.\nDer nächste Einzelaktien.\nDann wieder Krypto.\nDann wieder irgendwelche Trends.\n[PAUSE]",
+        why: "Du listest GENAU das auf, was er kennt. Er nickt innerlich."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Je mehr ich gesehen hab, desto unsicherer wurde das Ganze.",
+        full: "Und je mehr ich gesehen hab,\ndesto unsicherer wurde das Ganze.\n[PAUSE]\nNicht wegen Investments selbst —\nsondern wegen den ganzen unterschiedlichen Meinungen.\n[PAUSE]",
+        why: "Du normalisierst seine Unsicherheit. Er fühlt sich gesehen."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Viele investieren ... aber haben keine klare Struktur.",
+        full: "Viele investieren heutzutage zwar …\naber wenn man genauer hinschaut,\nhaben die meisten keine klare Struktur.\n[PAUSE]\nIrgendwelche ETFs.\nIrgendwelche Aktien.\nIrgendwelche Empfehlungen.\n[PAUSE]",
+        why: "Du beschreibst SEIN Depot — ohne 'du' zu sagen. Das ist die Kunst."
+      },
+      {
+        tones: ["KLAR"],
+        preview: "Warum bestimmte Positionen überhaupt drin liegen, wissen die wenigsten.",
+        full: "Warum bestimmte Positionen überhaupt im Depot liegen,\nwissen die wenigsten wirklich.\n[PAUSE]",
+        why: "Direkter Befund. Klar. Ohne Schnörkel."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Und genau das fand ich irgendwann extrem spannend.",
+        full: "Und genau das fand ich irgendwann extrem spannend.\n[PAUSE]\nNicht:\n'Welche Aktie ist gerade beliebt?'\nSondern:\n'Wie baut man ein Depot logisch und strategisch auf?'\n[PAUSE]\nUnd genau deshalb beschäftige ich mich heute intensiv mit dem Thema Depotstruktur und Investmentstrategie.\n[PAUSE]",
+        why: "Du framest dich als STRATEGE — nicht als Verkäufer. Wichtigster Identitäts-Moment."
+      }
+    ],
+    tips: [
+      "Sprich langsam. Lass die Pausen wirken. Hier KEIN Druck.",
+      "Wenn er nickt oder 'mhm' sagt: kurz innehalten — er ist drin."
+    ]
+  },
+  {
+    id: "4",
+    title: "Pain Digging",
+    nav: "Pain Digging",
+    goal: "WICHTIGSTE PHASE. Den emotionalen Schmerz freilegen. Frage so lange nach, bis er es SELBST ausspricht.",
+    blocks: [
+      {
+        tones: ["BESORGT"],
+        preview: "Was ist aktuell deine größte Unsicherheit beim Investieren?",
+        full: "Was ist aktuell deine größte Unsicherheit beim Investieren?\n[PAUSE]",
+        why: "Erster Pain-Anker. Lass ihn formulieren. Du bewertest nicht."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Wo merkst du selbst, dass dir noch Klarheit fehlt?",
+        full: "Wo merkst du selbst,\ndass dir noch Klarheit fehlt?\n[PAUSE]",
+        why: "Doppel-Frage zum gleichen Pain. Er muss konkreter werden."
+      },
+      {
+        tones: ["VERWIRRT"],
+        preview: "Wie fühlt sich das aktuell für dich an?",
+        full: "Wie fühlt sich das aktuell für dich an?\n[PAUSE]",
+        why: "GEFÜHLSEBENE. Nicht Fakten. Emotionen. Das ist der wahre Verkaufshebel."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Viele investieren ... vertrauen ihrem Depot innerlich aber nicht.",
+        full: "Viele investieren zwar …\nvertrauen ihrem Depot innerlich aber trotzdem nicht wirklich.\n[PAUSE]\nIst das bei dir teilweise ähnlich?\n[PAUSE]",
+        why: "Suggestive Frage. Er kann fast nur 'Ja' sagen. Jedes Ja = Schritt zum Termin."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Wie viel Zeit oder Geld verlierst du dadurch, dass dir Klarheit fehlt?",
+        full: "Und wenn du ehrlich bist:\nWas glaubst du,\nwie viel Zeit oder Geld verlierst du aktuell dadurch,\ndass dir diese Klarheit fehlt?\n[PAUSE]",
+        why: "EMOTIONALER TURNING POINT. Lass die Frage wirken. 3 Sekunden Pause MIN."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Was könnte langfristig passieren, wenn du genau so weitermachst?",
+        full: "Was könnte langfristig passieren,\nwenn du genau so weitermachst wie aktuell?\n[PAUSE]",
+        why: "Zukunfts-Schmerz multiplizieren. Hier MUSS er den Schmerz selbst aussprechen."
+      }
+    ],
+    tips: [
+      "Niemals selbst antworten! Lass IHN reden. Wenn er stockt → 3 Sekunden warten.",
+      "Schreibe seinen Pain WÖRTLICH in Notizen rechts. Wirst du in Phase 8 brauchen.",
+      "Wenn er 'Ich weiß nicht' sagt → konkretisiere: 'Wenn du 100 € monatlich falsch investierst — wie viel in 5 Jahren?'"
+    ]
+  },
+  {
+    id: "5",
+    title: "Future Pacing",
+    nav: "Future Pacing",
+    goal: "Den Lead in die Lösung versetzen. Er soll sich SELBST sehen, wie er Klarheit hat.",
+    blocks: [
+      {
+        tones: ["EUPHORISCH"],
+        preview: "Stell dir vor, du öffnest dein Depot und verstehst endlich wirklich warum.",
+        full: "Stell dir mal vor,\ndu öffnest dein Depot\nund verstehst endlich wirklich,\nwarum jede Position überhaupt drin ist.\n[PAUSE]",
+        why: "NLP. Du versetzt ihn körperlich in den Zielzustand. Er fühlt es — bevor er es hat."
+      },
+      {
+        tones: ["EUPHORISCH"],
+        preview: "Keine Käufe nach Gefühl. Keine Unsicherheit. Keine Panik.",
+        full: "Keine Käufe mehr nach Gefühl.\nKeine Unsicherheit mehr.\nKeine Panik bei Marktschwankungen.\n[PAUSE]",
+        why: "Du zählst seine konkreten Schmerzpunkte auf — und löst sie alle in einem Bild auf."
+      },
+      {
+        tones: ["EUPHORISCH"],
+        preview: "Sondern ein Depot, bei dem jede Position eine klare Aufgabe hat.",
+        full: "Sondern ein Depot,\nbei dem jede Position eine klare Aufgabe hat.\n[PAUSE]\nWie würde sich das für dich anfühlen?\n[PAUSE]",
+        why: "Frage zwingt ihn, das Gefühl AUSZUSPRECHEN. Er verbalisiert seinen Wunschzustand."
+      }
+    ],
+    tips: [
+      "Sprich beim Future Pacing LANGSAM. Jeder Satz ein eigener Gedanke.",
+      "Wenn er sagt 'gut/super/cool' → kein 'super!' zurück. Stille. Ihn weiter wirken lassen."
+    ]
+  },
+  {
+    id: "6",
+    title: "Selbstkontrolle lösen",
+    nav: "Selbstkontrolle",
+    goal: "Den eigentlichen Hebel aufdecken: Es ist KEIN Wissensproblem — es ist ein Strukturproblem.",
+    blocks: [
+      {
+        tones: ["RUHIG"],
+        preview: "Und genau da liegt meistens das eigentliche Problem.",
+        full: "Und genau da liegt meistens das eigentliche Problem.\n[PAUSE]",
+        why: "Übergang. Du kündigst eine Erkenntnis an. Er ist aufmerksam."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Die meisten denken, sie hätten ein Wissensproblem.",
+        full: "Die meisten denken,\nsie hätten ein Wissensproblem.\n[PAUSE]",
+        why: "Du benennst seine versteckte Annahme — die er selbst hatte."
+      },
+      {
+        tones: ["KLAR"],
+        preview: "In Wirklichkeit fehlt den meisten einfach Struktur.",
+        full: "In Wirklichkeit fehlt den meisten einfach Struktur.\n[PAUSE]\nETFs oder Aktien alleine sind noch keine Strategie.\n[PAUSE]",
+        why: "BREAKTHROUGH. Du löst sein Denken auf. Ab hier sieht er das Problem mit NEUEN Augen."
+      }
+    ],
+    tips: [
+      "Diese Phase ist KURZ aber MÄCHTIG. Nicht ausschmücken.",
+      "Sprich KLAR. Keine Fragen — nur Aussagen."
+    ]
+  },
+  {
+    id: "7",
+    title: "Micro Commitment",
+    nav: "Micro Commitment",
+    goal: "Ihn zu einer kleinen Entscheidung bewegen. Er sagt JA — laut. Damit ist die Tür offen.",
+    blocks: [
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Willst du einfach nur investieren ... oder wirklich verstehen?",
+        full: "Wenn du ehrlich bist:\nWillst du einfach nur investieren …\noder wirklich verstehen,\nwas du da überhaupt tust?\n[PAUSE]",
+        why: "DOPPEL-WAHL-FRAGE. Niemand sagt 'Ich will nur blind investieren'. Er MUSS 'verstehen' sagen."
+      }
+    ],
+    tips: [
+      "Diese Frage ist scharf. Lass sie wirken. Sage NICHTS bis er antwortet.",
+      "Wenn er 'verstehen' sagt → du hast Commitment. Weiter zu Phase 8."
+    ]
+  },
+  {
+    id: "8",
+    title: "Überleitung",
+    nav: "Überleitung",
+    goal: "Sanft zum Folgegespräch überleiten. Kein Hard-Sell. Nur logische Fortsetzung.",
+    blocks: [
+      {
+        tones: ["RUHIG", "KLAR"],
+        preview: "Genau deshalb macht es Sinn, dass wir uns deine Situation anschauen.",
+        full: "Und genau deshalb macht es Sinn,\ndass wir uns deine Situation einmal wirklich sauber anschauen.\n[PAUSE]",
+        why: "Du baust direkt auf sein 'verstehen' aus Phase 7 auf. Logische Brücke."
+      },
+      {
+        tones: ["BESORGT"],
+        preview: "Die meisten merken viel zu spät, welche Investitionsfehler sie machen.",
+        full: "Die meisten merken viel zu spät,\nwelche Investitionsfehler sie überhaupt machen.\n[PAUSE]\nUnd genau diese Fehler sorgen später häufig dafür,\ndass Menschen unnötig Zeit, Rendite oder Kontrolle verlieren.\n[PAUSE]",
+        why: "Verlustangst aktivieren. 'Zu spät' = er will JETZT handeln."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Im nächsten Gespräch schauen wir gemeinsam an, welche Fehler du vermeiden solltest.",
+        full: "Deshalb schauen wir uns im nächsten Gespräch gemeinsam an,\nwelche konkreten Investitionsfehler du vermeiden solltest\nund worauf man bei einer sauberen Investmentstrategie wirklich achten muss.\n[PAUSE]",
+        why: "Klares Versprechen für das Folgegespräch. Konkret. Nutzen klar."
+      },
+      {
+        tones: ["KLAR"],
+        preview: "Danach kannst du selbst entscheiden — allein oder mit uns.",
+        full: "Und danach kannst du für dich selbst entscheiden,\nob du den Weg alleine weitergehen möchtest\noder gemeinsam mit uns.\n[PAUSE]\nGanz entspannt.\n[PAUSE]",
+        why: "Druck rausnehmen. 'Entspannt' entwaffnet Skeptiker komplett."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Hättest du die nächsten Tage mal 30 bis 40 Minuten Zeit dafür?",
+        full: "Hättest du die nächsten Tage mal 30 bis 40 Minuten Zeit dafür?\n[PAUSE]",
+        why: "KONKRETE FRAGE. 30-40 Min klingt kurz. Niedrige Hürde. Fast immer 'Ja'."
+      }
+    ],
+    tips: [
+      "Wenn er zögert → Einwand 8 (Aufschub) in Sidebar rechts öffnen.",
+      "'30-40 Minuten' bewusst kurz framen. Im Sales-Call wird dann 1-1,5h."
+    ]
+  },
+  {
+    id: "9",
+    title: "Commitment",
+    nav: "Commitment",
+    goal: "Verbindlichkeit erzeugen. Er soll sich selbst überzeugen, warum er DAS Gespräch ernst nimmt.",
+    blocks: [
+      {
+        tones: ["RUHIG"],
+        preview: "Wichtig auch: Das Gespräch macht nur Sinn, wenn du wirklich offen bist.",
+        full: "Ganz wichtig aber auch:\nDas Gespräch macht natürlich nur Sinn,\nwenn du wirklich offen dafür bist,\ndir das Ganze ernsthaft anzuschauen.\n[PAUSE]",
+        why: "REVERSE-PSYCHOLOGIE. Du qualifizierst IHN. Damit hebst du deinen Status."
+      },
+      {
+        tones: ["KLAR"],
+        preview: "Wir nehmen uns dafür wirklich Zeit.",
+        full: "Wir nehmen uns dafür wirklich Zeit.\n[PAUSE]",
+        why: "Verbindlichkeit auf deiner Seite. Erzeugt Verbindlichkeit auf seiner."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Warum möchtest du das Thema gerade jetzt angehen?",
+        full: "Deshalb mal ehrlich gefragt:\nWarum möchtest du das Thema Investments gerade jetzt angehen\nund nicht erst irgendwann später?\n[PAUSE]",
+        why: "GOLDENE FRAGE. Er muss SICH SELBST den Grund laut sagen. Damit verkauft er sich den Termin selbst."
+      }
+    ],
+    tips: [
+      "Diese Phase ist der SELBSTVERKAUFS-Moment. Sage NICHTS, wenn er antwortet.",
+      "Was er hier sagt → wörtlich in Notizen. Im Sales-Call zurückspielen."
+    ]
+  },
+  {
+    id: "10",
+    title: "Abschluss",
+    nav: "Abschluss",
+    goal: "Termin festmachen. Verbindlich. Klar. Ohne Wischiwaschi.",
+    blocks: [
+      {
+        tones: ["HUMORVOLL"],
+        preview: "Perfekt, sehr stark.",
+        full: "Perfekt, sehr stark.\n[PAUSE]",
+        why: "Anerkennung. Er fühlt sich gut. Du bist in Führung."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Dann finden wir jetzt nur noch einen passenden Termin.",
+        full: "Dann finden wir jetzt nur noch einen passenden Termin\nfür das nächste Gespräch.\n[PAUSE]",
+        why: "Selbstverständlichkeit. 'Nur noch' = klein, einfach."
+      },
+      {
+        tones: ["LOCKER"],
+        preview: "Und trag ihn dir bitte direkt ordentlich in den Kalender ein.",
+        full: "Und trag ihn dir bitte direkt ordentlich in den Kalender ein —\nnicht, dass wir beide uns hier verpassen.\n[PAUSE]",
+        why: "VERBINDLICHKEIT. Mit Humor verpackt — aber er hört: 'das ist ein echter Termin'."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Perfekt, [NAME]. Dann hören wir uns am [TAG] um [UHRZEIT].",
+        full: "Perfekt, [NAME].\nDann hören wir uns am [TAG] um [UHRZEIT].\nFreue mich drauf.\nMach es gut.",
+        why: "Klares Ende. Konkret. Termin in Notizen rechts eintragen!"
+      }
+    ],
+    tips: [
+      "Termin SOFORT in Notizen-Sidebar speichern!",
+      "Doppel-Wahl: 'Morgen vormittags oder nachmittags?' → '9 Uhr oder 12 Uhr?'",
+      "Nach dem Termin: Hausaufgabe geben — 'Halt dein Depot bereit'."
+    ]
+  }
+];
+
+const EINWAENDE = [
+  { title: "Die Preis-Frage", q: "Was kostet das eigentlich?", a: "Sehr gute Frage. Da darfst du später auf jeden Fall draufkommen — ich will aber erst ein paar Dinge mit dir besprechen, dass das überhaupt Sinn ergibt. Passt?", tech: "Wert vor Preis. Erst Rahmen klären.", muster: "Annehmen → Preis verschieben → Mini-Ja holen. Du sagst keine Zahl, bevor der Wert steht. Das „Passt?“ am Ende holt ein kleines Commitment ab." },
+  { title: "Misstrauens-Preisfrage", q: "Ist das günstig oder teuer?", a: "Sagen wir mal so: günstig genug, dass es sich rechnet. Aber bevor wir über Preis reden — was wäre für dich das Ergebnis, das es wert wäre?", tech: "Annehmen + Logik umdrehen. Gegenfrage.", muster: "Annehmen → Gegenfrage zurück: ER soll den Wert benennen, nicht du. Wer den Wert ausspricht, verkauft sich den Preis selbst." },
+  { title: "Angriff auf Erfahrung", q: "Wie lange machst du das schon?", a: "Ich mach das schon eine Weile — dazu im nächsten Gespräch gerne mehr.\n→ Aber mal andersrum: Wie lange machst DU das denn schon? Und wie weit bist du damit gekommen?\n[er antwortet]\n→ Genau das meine ich. Es kommt nicht drauf an, wie lange jemand braucht — sondern wie er es aufbaut. Und genau da setzen wir an.", tech: "Gegenfrage statt Rechtfertigung.", muster: "DER KLASSIKER. Annehmen → Gegenfrage zurück an ihn („Wie lange machst DU das?“) → seine Antwort als Reframe nutzen. Du rechtfertigst dich NIE. Du drehst den Angriff in eine Frage um, die ihn auf seine eigene Lücke stößt — und reframst dann auf das, worauf es ankommt: nicht Zeit, sondern Aufbau." },
+  { title: "Angriff auf Portfolio", q: "Was investierst du denn selber?", a: "Glaubst du, eine erfolgreiche Person plaudert einfach so ihr Portfolio aus? Würdest du das machen, wenn du monatlich 20.000 € Abwürfe hättest? Außerdem leben wir komplett unterschiedliche Leben — was bei mir funktioniert, ist nicht zwangsläufig das, was bei dir funktioniert. Macht das Sinn?", tech: "Humor + Rolle klarstellen.", muster: "Mit Humor entwaffnen → Rolle klarstellen → zurück zu IHM. Du gibst nie private Zahlen preis. Die Gegenfrage („Würdest DU das machen?“) dreht die Frage um." },
+  { title: "Skepsis gegen Firma", q: "Was ist denn das für eine Firma?", a: "Wir sind ein Team, das sich auf Portfolio-Struktur und Investmentstrategie spezialisiert hat. Mehr Details bekommst du im Folgegespräch. Wichtig für dich jetzt: Wir schauen DEINE Situation an, nicht unsere. Passt das?", tech: "Kurz benennen. Sofort zum Nutzen.", muster: "Kurz benennen → sofort zum Nutzen für IHN umlenken („Wir schauen DEINE Situation an“). Nicht über euch reden — der Fokus bleibt auf ihm. Mini-Ja am Ende." },
+  { title: "Vorwissen & Brush-off", q: "Ich kenn das alles schon, MSCI World, S&P 500...", a: "Stark, dann hast du schon Grundwissen. Aber mal Hand aufs Herz: Wissen über ETFs heißt ja noch nicht automatisch Struktur. Die meisten kennen die Namen — aber wissen nicht, warum genau diese drei in IHREM Depot liegen. Kennst du den Unterschied?", tech: "Zustimmen. Annahme aufbrechen.", muster: "Zustimmen („stark!“) → Annahme aufbrechen: Wissen ≠ Struktur → Gegenfrage („Kennst du den Unterschied?“). Du nimmst ihm den Wind, ohne ihn dumm dastehen zu lassen." },
+  { title: "Falsche Schublade", q: "Ach, ihr macht Versicherungen?", a: "Nein, das ist ein Missverständnis. Wir machen Investmentstrategie und Portfoliostruktur. Es geht nicht um Produkte — es geht darum, dass du verstehst, warum welche Position in deinem Depot liegt. Klingt das eher nach dem, was du suchst?", tech: "Schublade korrigieren. Neu rahmen.", muster: "Klar korrigieren → neu rahmen (Strategie statt Produkt) → Gegenfrage zurück („Klingt das eher nach dem, was du suchst?“). Du lässt die falsche Schublade nicht stehen." },
+  { title: "Der Aufschub", q: "Ich überleg mir das nochmal, ich melde mich.", a: "Klar, kein Druck. Sag mir aber ehrlich: Was genau fehlt dir denn gerade noch, um zu sagen 'Ja, lass uns das nächste Gespräch machen'? Damit ich weiß, ob ich dir da heute noch was klären kann.", tech: "Aufschub erlauben. Echten Grund freilegen.", muster: "Aufschub erlauben („kein Druck“) → echten Grund freilegen („Was genau fehlt dir noch?“). Der Aufschub ist nie der echte Einwand — die Gegenfrage holt ihn raus. Danach: Nebeltechnik." }
+];
+
+const TONALITAET = [
+  { title: "HUMORVOLL", text: "Leicht. Locker. Ein Lächeln in der Stimme. Nicht albern — aber warm." },
+  { title: "LOCKER", text: "Entspannte Körperhaltung. Kein Druck. Du hast Zeit." },
+  { title: "RUHIG", text: "Langsam sprechen. Tiefe Stimme. 2 Sekunden Pause aushalten." },
+  { title: "NEUGIERIG", text: "Stimme geht am Ende leicht hoch. Echtes Interesse — kein Verhör." },
+  { title: "BESORGT", text: "Mitfühlend, leicht ernst. Du teilst seine Sorge — nicht zu dramatisch." },
+  { title: "VERWIRRT", text: "Stirnrunzeln. 'Hilf mir das zu verstehen' — du bist nicht der Lehrer." },
+  { title: "KLAR", text: "Direkter Satz. Keine Floskeln. Punkt. Pause." },
+  { title: "EUPHORISCH", text: "Wenn du das Zukunftsbild malst: Begeisterung — kontrolliert. Du verkaufst ein Gefühl." },
+  { title: "AUTHENTISCH", text: "Wenn du von dir erzählst: kein Pitch. Persönlich. Wie zu einem Freund." }
+];
+
+const MERKSAETZE = [
+  "Wer fragt, der führt — und ich frage.",
+  "Stille ist mein Werkzeug, nicht mein Feind.",
+  "Jede Angriffsfrage ist ein verstecktes Kaufsignal.",
+  "Wer sich rechtfertigt, hat schon verloren.",
+  "Ich verkaufe keinen Termin — ich verkaufe eine Identität."
+];
+
+const CONVERSATION_OPERATORS = {
+  "JA": {
+    method: "Beweis-Methode",
+    goal: "Er soll seine Aussage selbst bestätigen.",
+    questions: [
+      "Woran machst du das fest?",
+      "Woher weißt du das?",
+      "Was überzeugt dich daran?",
+      "Was bringt dich zu dieser Überzeugung?",
+      "Hast du das selbst überprüft?"
+    ],
+    merk: "Ein Ja ist kein Ende. Es ist der Start für Beweis."
+  },
+  "NEIN": {
+    method: "Begründungs-Methode",
+    goal: "Er soll erklären, warum nicht.",
+    questions: [
+      "Warum glaubst du das?",
+      "Was bringt dich zu dieser Meinung?",
+      "Wie bist du darauf gekommen?",
+      "Was müsste passieren, damit sich das ändert?",
+      "Was spricht für dich dagegen?"
+    ],
+    merk: "Ein Nein braucht keinen Druck. Es braucht Begründung."
+  },
+  "WAHRSCHEINLICH": {
+    method: "Unsicherheits-Methode",
+    goal: "Unsicherheit sichtbar machen.",
+    questions: [
+      "Warum wahrscheinlich?",
+      "Was macht dich dabei unsicher?",
+      "Was fehlt dir gerade?",
+      "Was hält dich noch zurück?",
+      "Woher kommt dieses Gefühl?"
+    ],
+    merk: "Wahrscheinlich heißt: Die Unsicherheit ist noch nicht ausgesprochen."
+  },
+  "WEISS ICH NICHT": {
+    method: "Reflexions-Methode",
+    goal: "Den Lead zum Nachdenken bringen.",
+    questions: [
+      "Interessant...",
+      "Was glaubst du denn?",
+      "Wovon könnte das abhängen?",
+      "Wie würdest du das herausfinden?",
+      "Was wäre deine erste Vermutung?"
+    ],
+    merk: "Kein Wissen ist kein Stopp. Es ist eine Einladung zur Reflexion."
+  },
+  "KOMMT DRAUF AN": {
+    method: "Bedingungs-Methode",
+    goal: "Die Bedingung finden.",
+    questions: [
+      "Worauf genau?",
+      "Wovon hängt das ab?",
+      "Was müsste dafür erfüllt sein?",
+      "Welche Rolle spielt das?",
+      "Was wäre der Unterschied?"
+    ],
+    merk: "Kommt drauf an heißt: Finde den Hebel."
+  },
+  "BESTIMMT": {
+    method: "Bestätigungs-Methode",
+    goal: "Selbstsicherheit überprüfen.",
+    questions: [
+      "Was gibt dir diese Sicherheit?",
+      "Woher kommt diese Überzeugung?",
+      "Hast du das schon erlebt?",
+      "Was überzeugt dich davon?",
+      "Woran erkennst du das?"
+    ],
+    merk: "Selbstsicherheit wird stärker, wenn sie sauber begründet ist."
+  },
+  "VIELLEICHT": {
+    method: "Offene-Tür-Methode",
+    goal: "Gedanken weiter öffnen.",
+    questions: [
+      "Was müsste passieren, damit daraus ein Ja wird?",
+      "Was hält dich noch zurück?",
+      "Was fehlt dir noch?",
+      "Was macht dich unentschlossen?",
+      "Was würde dir dabei helfen?"
+    ],
+    merk: "Vielleicht ist keine Absage. Es ist eine offene Tür."
+  },
+  "PHILOSOPHIE": {
+    method: "Philosophie",
+    goal: "Fremde Empfehlungen von seiner eigenen Situation trennen.",
+    questions: [
+      "Wenn ich dir jetzt drei Aktien nennen würde, glaubst du, dass sie automatisch zu deinem Ziel, deinem Einkommen und deinem Depot passen würden?",
+      "Leben diese Menschen dein Leben?",
+      "Haben sie dieselben Ziele wie du?",
+      "Treffen sie dieselben Entscheidungen wie du?",
+      "Würde das automatisch bedeuten, dass es für dich richtig ist?"
+    ],
+    merk: "Nicht fremde Tipps kopieren. Die eigene Situation prüfen."
+  }
+};
+
+const CONVERSATION_OPERATOR_ORDER = [
+  "JA",
+  "NEIN",
+  "WAHRSCHEINLICH",
+  "WEISS ICH NICHT",
+  "KOMMT DRAUF AN",
+  "BESTIMMT",
+  "VIELLEICHT",
+  "PHILOSOPHIE"
+];
+
+// ── KLEMMMUSTER: das Muster hinter jeder Phase + was du hier "lädst" ──
+// Erscheint im ÜBEN-Modus. "muster" = die psychologische Mechanik.
+// "munition" = was du hier sammelst oder einsetzt (Hebel für später).
+const PHASE_MUSTER = {
+  "1":  { muster: "Frame-Setting. Du nimmst den Verkaufsdruck raus und übernimmst gleichzeitig die Führung. Das 'Klingt das fair?' ist dein erstes Micro-Commitment — ein kleines, harmloses Ja, das die Tür öffnet.", munition: "LADEN: Name, Stimmung, erste Signale → sofort in die Lead-Notizen rechts. Du baust ab Sekunde 1 dein Profil." },
+  "2":  { muster: "Status-Aufnahme = Munitionslager. Du bewertest nichts, du fragst nur. Jede Antwort ist später ein Hebel. Besonders: 'Woher hast du dein Wissen?' deckt auf, dass er keine eigene Struktur hat.", munition: "LADEN: 'TikTok/YouTube' und 'keine Struktur' → das ist deine Hauptmunition für Vorstellung (Phase 3) und Pain Digging (Phase 4)." },
+  "3":  { muster: "Storytelling-Technik. Du spiegelst SEINEN Schmerz über deine eigene Geschichte zurück — ohne 'du' zu sagen. Er erkennt sich wieder und du wirst vom Verkäufer zum Strategen, der den Weg selbst gegangen ist.", munition: "EINSETZEN: Was er in Phase 2 gesagt hat (verschiedene Meinungen, Unsicherheit) — du beschreibst SEIN Depot, als wäre es deins gewesen." },
+  "4":  { muster: "Schmerz × Zeit. Du multiplizierst ein vages Problem von heute mit 5 Jahren — aus 'unsicher' werden mehrere tausend Euro Verlust. Entscheidend: ER spricht den Schmerz selbst aus, nicht du.", munition: "LADEN (am wichtigsten!): Seinen Pain WÖRTLICH notieren. Diesen exakten Wortlaut spielst du in Future Pacing und im Sales-Call zurück." },
+  "5":  { muster: "Zukunftstechnik / NLP-Zukunftsbild. Du versetzt ihn körperlich in den Zielzustand — er fühlt das Ergebnis, bevor er es hat. Du verkaufst das Gefühl, nicht die Methode.", munition: "EINSETZEN: Genau seine Pain-Punkte aus Phase 4 — du löst sie alle in einem einzigen Bild auf." },
+  "6":  { muster: "Paradigma-Bruch. Du löst seine versteckte Annahme auf: Es ist kein Wissensproblem, es ist ein Strukturproblem. Ab hier sieht er sein eigenes Problem mit neuen Augen — deinen.", munition: "KURZ & MÄCHTIG. Keine Fragen — nur klare Aussagen. Nicht ausschmücken, wirken lassen." },
+  "7":  { muster: "Doppel-Wahl-Frage. 'Nur investieren oder wirklich verstehen?' — niemand wählt freiwillig 'blind'. Er MUSS 'verstehen' sagen. Das ist sein lautes Ja, das du gleich weiterverwendest.", munition: "EINSETZEN: Sein 'verstehen' ist die Brücke. Sage nichts, bis er antwortet." },
+  "8":  { muster: "Logische Brücke + Verlustangst. Du baust direkt auf sein 'verstehen' auf und framst Nichtstun als Risiko ('die meisten merken zu spät...'). Menschen vermeiden Verlust stärker, als sie Gewinn suchen.", munition: "EINSETZEN: Sein 'verstehen' aus Phase 7. '30–40 Minuten' bewusst klein framen — niedrige Hürde." },
+  "9":  { muster: "Reverse-Selling. Du qualifizierst IHN ('nur wenn du wirklich offen bist'). Damit drehst du den Status um — und mit 'Warum gerade jetzt?' verkauft er sich den Termin selbst.", munition: "LADEN: Sein 'Warum jetzt' wörtlich notieren → im Sales-Call ist das dein stärkster Hebel." },
+  "10": { muster: "Verbindlichkeit. Doppel-Wahl beim Termin ('vormittags oder nachmittags?' → '9 oder 12?') hat kein 'Nein' als Option. Hausaufgabe schafft Commitment. Klares Ende: hier wurde nichts verkauft — ein Plan gemacht.", munition: "LADEN: Termin SOFORT in die Notizen. Hausaufgabe geben: 'Halt dein Depot bereit.'" }
+};
+
+// ── FUNDAMENT: Verkaufspsychologie (Closing-Mastery-Grundlagen) ──
+const FUNDAMENT = {
+  prinzip: {
+    title: "Das Prinzip",
+    lead: "Wer fragt, der führt.",
+    text: "Dieses Skript ist kein Verkaufstext. Es ist ein Führungs-System. Du stellst Fragen, auf die du die Antwort schon kennst. Du lässt den Lead reden, baust Schmerz auf, baust Vertrauen auf — und setzt den Folgetermin. Wenn du nichts sagst, sagt der Lead etwas. Deshalb führst du. Immer.",
+    rules: [
+      "Stelle nur Fragen, auf die du die Antwort schon weißt.",
+      "Lass den Lead 70 % reden. Du 30 %.",
+      "Hektik wirkt unsicher. 2 Sekunden Pause wirkt souverän.",
+      "Wer sich rechtfertigt, hat schon verloren.",
+      "Jede Angriffsfrage ist ein verstecktes Kaufsignal."
+    ]
+  },
+  formel: {
+    title: "Die Grundformel",
+    head: "Wahrnehmung von Wert  >  Wahrnehmung von Preis",
+    formula: "Fit × Problem-Bewusstsein × Konsequenz-Bewusstsein × Zielklarheit × Glaube an die Erreichbarkeit × Vertrauen in dich / den Prozess × Entscheidungsfähigkeit = Abschluss",
+    note: "Es ist ein Produkt, keine Summe: Ist EIN Faktor null, ist das Ergebnis null. Genau deshalb arbeitest du jeden Faktor im Call ab — eine einzige Lücke killt den Abschluss."
+  },
+  ist: {
+    title: "Was Verkauf WIRKLICH ist",
+    items: ["Transfer von Überzeugung", "Geführte Entscheidungsfindung", "Klarheit schaffen", "Unsicherheit reduzieren", "Risiko minimieren", "Vertrauen aufbauen", "Verantwortung übernehmen"]
+  },
+  nicht: {
+    title: "Was Verkauf NICHT ist",
+    items: ["Kein Überreden", "Kein Manipulieren", "Kein \u201ejemandem etwas andrehen\u201c", "Kein Druck ausüben", "Kein Skript ablesen"]
+  },
+  psycho: {
+    title: "Wie Verkauf psychologisch funktioniert",
+    points: [
+      "Menschen kaufen <strong>emotional</strong> und rechtfertigen dann <strong>rational</strong>.",
+      "Sie handeln nur bei <strong>Schmerz</strong>, <strong>Dringlichkeit</strong> oder <strong>klarer Vision</strong>.",
+      "Menschen vermeiden <strong>Risiko</strong> stärker, als sie <strong>Gewinn</strong> suchen."
+    ]
+  },
+  warum90: {
+    title: "Warum 90 % nicht verkaufen können",
+    items: ["Sie reden zu viel", "Sie hören nicht richtig zu", "Sie verstehen den Kunden nicht", "Sie haben Angst vor Ablehnung", "Sie vermeiden Konfrontation", "Sie glauben selbst nicht zu 100 % an ihr Angebot", "Sie übernehmen keine Führung"]
+  }
+};
+
+// ── DIE 10 TECHNIKEN (Closing Mastery) ──
+const TECHNIKEN = [
+  { n:1,  name:"Herzenstechnik",        farbe:"green",  zweck:"Emotional verankern",            aufbau:"\u201eDir liegt es also am Herzen, dass …, richtig?\u201c", beispiel:"\u201eDir liegt es also am Herzen, dass du, wenn du heute startest, nicht wieder ein Programm kaufst, das du nach 2 Wochen abbrichst, sondern diesmal wirklich nachhaltig Ergebnisse siehst – richtig?\u201c", regel:"Seine EIGENEN Worte zurückspiegeln. Kein generisches Template — du nimmst exakt, was er gesagt hat, und baust daraus den Satz. Endet immer mit \u201erichtig?\u201c → holt ein Ja ab." },
+  { n:2,  name:"Nebeltechnik",          farbe:"orange", zweck:"Alle Einwände holen",            aufbau:"\u201eGibt es außer … noch einen Punkt?\u201c", beispiel:"\u201eGibt es außer dem Timing noch etwas anderes, das dich davon abhält, heute zu starten?\u201c", regel:"Behandle NIE den ersten Einwand, bevor du weißt, ob noch mehr dahintersteckt. Sonst löst du das Falsche. Erst alle Einwände einsammeln, dann der Reihe nach behandeln." },
+  { n:3,  name:"Vorraussetzungstechnik", farbe:"gold",  zweck:"Commitment vor der Lösung",      aufbau:"\u201eMal angenommen … sind wir dann im Geschäft?\u201c / \u201eVorausgesetzt [Name] …, sind wir dann im Geschäft?\u201c", beispiel:"\u201eMal angenommen, wir finden einen Weg, der für dich finanziell passt – sind wir dann im Geschäft?\u201c", regel:"Hol dir das Commitment BEVOR du die Lösung zeigst. Niemals andersrum — sonst verhandelst du ohne Grundlage." },
+  { n:4,  name:"Zukunftstechnik",       farbe:"blue",   zweck:"Future Pacing",                  aufbau:"\u201eWie würde die Zukunft für dich aussehen, wenn du …?\u201c", beispiel:"\u201eWie würde dein Leben in 6 Monaten aussehen, wenn du endlich weißt, wie du jeden Einwand souverän behandelst, keine Sales mehr aus Unsicherheit verlierst und jeden Monat konstant deine Zahlen hittest?\u201c", regel:"Versetze ihn ins Zielbild. Er soll sich selbst dort sehen — das Gefühl entsteht vor dem Kauf." },
+  { n:5,  name:"Inspizierungstechnik",  farbe:"purple", zweck:"Stoppen & zurückführen (\u201eklemmen\u201c)", aufbau:"\u201eWarte mal kurz / Lass mich kurz stoppen. Du hast gesagt …, willst du das wirklich – oder reden wir nur darüber?\u201c", beispiel:"\u201eLass mich kurz stoppen. Du hast mir am Anfang gesagt, du willst nächsten Sommer endlich in Form sein – willst du das wirklich, oder reden wir hier gerade nur darüber?\u201c", regel:"Das ist das \u201eIch klemm das mal kurz auf\u201c-Muster. Du unterbrichst bewusst und holst ihn zu seinem eigenen Ziel zurück. Trennt echte Absicht von Gerede." },
+  { n:6,  name:"Mentortechnik",         farbe:"gold",   zweck:"Identitäts- / Denkweise-Shift",  aufbau:"\u201eMein Mentor hat mir mal beigebracht, dass …?\u201c", beispiel:"\u201eMein Mentor hat mir mal etwas beigebracht: Wir sind nicht die Person, die unsere Ziele erreichen kann. Unsere Denkweise, unsere Gewohnheiten – die haben uns dahin gebracht, wo wir heute stehen. Denkst du, dieselbe Herangehensweise wie bisher bringt dich zu [Ziel]?\u201c", regel:"Über eine geliehene Autorität (Mentor) konfrontierst du seine Denkweise, ohne IHN direkt anzugreifen. Sagt er Nein → \u201eAlso muss sich etwas ändern, oder?\u201c. Sagt er Ja → \u201eWas ist dann das Schlauste, was du tun kannst?\u201c" },
+  { n:7,  name:"Storytelling",          farbe:"blue",   zweck:"Identifikation über deine Story", aufbau:"\u201eIch hab mich in der genau gleichen Situation befunden wie du …\u201c", beispiel:"\u201eVerstehe ich zu 100 %. Ich habe mich in der genau gleichen Situation befunden, als ich vor der Entscheidung stand, in mich zu investieren, obwohl ich gerade so das Geld dafür hatte, aber … Was denkst du, habe ich gemacht?\u201c", regel:"Du wirst zum Spiegel. Er sieht sich in dir. Die offene Frage am Ende zieht ihn in die Geschichte hinein." },
+  { n:8,  name:"Paradigmatechnik",      farbe:"orange", zweck:"Bisherige Denkweise hinterfragen", aufbau:"\u201eHat sich deine Denkweise für dich ausbezahlt?\u201c", beispiel:"\u201eHat sich deine Denkweise, die du bis jetzt hast, für dich ausbezahlt? Bist du momentan an dem Punkt, wo du stehen möchtest?\u201c", regel:"Du stellst nicht IHN in Frage, sondern sein bisheriges Muster. Wenn er ehrlich ist, muss er zugeben: Das, was ihn hierher gebracht hat, bringt ihn nicht weiter." },
+  { n:9,  name:"Upselltechnik",         farbe:"green",  zweck:"Aufstieg in das größere Angebot", aufbau:"\u201eMein Erfolg ist dein Erfolg …\u201c", beispiel:"\u201eGut, also liegt es mir doch am Herzen, dass du jetzt Kunde wirst, ich dich erfolgreich mache, sodass du im Nachhinein das größere Angebot kaufst und wir dein Business gemeinsam skalieren – macht das Sinn für dich?\u201c", regel:"Interessen koppeln: Sein Erfolg ist auch deiner. Der nächste Schritt wird zur logischen Fortsetzung, nicht zum zusätzlichen Verkauf." },
+  { n:10, name:"Umkehrtechnik",         farbe:"purple", zweck:"Perspektive umdrehen",           aufbau:"\u201eStell dir vor, du wärst jetzt in meiner Situation …\u201c", beispiel:"\u201eStell dir vor, du wärst jetzt in meiner Situation und sprichst mit einem potenziellen Kunden, dessen Leben du verändern könntest, kannst ihm aber nicht genau sagen, was er braucht, damit er endlich den Weg einschlägt, den er so lange aufgeschoben hat. Was genau würdest du in dieser Situation machen?\u201c", regel:"Du gibst ihm deine Rolle. Plötzlich argumentiert er FÜR den Abschluss — gegen seinen eigenen Einwand." }
+];
+
+// ── EINWAND-SYSTEM: zwei Werkzeuge + der komplette Flow ──
+const EINWAND_TOOLS = [
+  { name:"Einwand isolieren", farbe:"blue", aufbau:"\u201eIst das der einzige Punkt, der dich hält?\u201c", beispiel:"\u201eOkay, das verstehe ich. Mal kurz abgesehen vom Geld – gibt es sonst noch irgendetwas, das dich davon abhält, heute zu starten? Ich frage, weil ich sicherstellen will, dass wir wirklich über alles geredet haben.\u201c", ziel:"Keine weiteren Überraschungen am Ende.", logik:"Sagt er Nein → du hast den echten letzten Einwand → weiter im Baukasten. Sagt er Ja → neuer Einwand → von vorne." },
+  { name:"Wert trennen", farbe:"gold", aufbau:"Trenne erst den Preis vom Wert – dann lass ihn den Wert selbst aussprechen.", beispiel:"\u201eMal abgesehen vom Geld – würdest du es machen?\u201c → Er sagt Ja → \u201eWarum?\u201c → Er erklärt dir selbst, warum er es will.", ziel:"Er sagt selbst, warum er es will.", logik:"Jetzt kennst du seinen echten Wert — und kannst darauf aufbauen. Der Preis ist nur noch eine Rechenaufgabe." }
+];
+
+const EINWAND_UNTERSCHIED = "Auf den ersten Blick klingen beide ähnlich — der Unterschied ist der Zweck. <strong>Einwand isolieren</strong> stellt sicher, dass das der LETZTE Einwand ist, bevor du anfängst (\u201eGibt es außer dem Geld noch etwas?\u201c). <strong>Wert trennen</strong> löst den Wunsch vom Preis und lässt ihn selbst bestätigen, dass er es will (\u201eAbgesehen vom Geld – würdest du es machen?\u201c). Reihenfolge: erst isolieren, dann trennen, dann behandelst du nur noch das Geld-Thema.";
+
+const EINWAND_FLOW = [
+  { n:1, tech:"Nebeltechnik",            farbe:"orange", titel:"Alle Einwände holen",        text:"Behandle nie den ersten Einwand, bevor du weißt, ob da noch mehr steckt. Sonst löst du das Falsche." },
+  { n:2, tech:"Einwand verstehen",       farbe:"orange", titel:"Geld oder Wert?",            text:"\u201eZu teuer\u201c bedeutet meistens eines von zwei Dingen: kein Geld auf einmal, oder er sieht den Wert noch nicht. Zwei völlig verschiedene Gespräche." },
+  { n:3, tech:"Wert trennen",            farbe:"gold",   titel:"Er überzeugt sich selbst",   text:"Geld hypothetisch wegnehmen. Brücke bauen. Ihn reden lassen — er redet sich selbst rein, du schweigst." },
+  { n:4, tech:"Herzenstechnik",          farbe:"green",  titel:"Emotional verankern",        text:"Seine eigenen Worte zurückspiegeln. Kein generisches Template — du nimmst exakt, was er gesagt hat, und baust daraus den Satz." },
+  { n:5, tech:"Einwand isolieren",       farbe:"blue",   titel:"Keine Hintertür mehr",       text:"Bestätigen, dass Geld der einzige offene Punkt ist. Wenn er Ja sagt, hat er keine Ausrede mehr." },
+  { n:6, tech:"Vorraussetzungstechnik",  farbe:"teal",   titel:"Commitment vor der Lösung",  text:"Erst Commitment holen – dann Lösung zeigen. Niemals andersrum, sonst verhandelst du ohne Grundlage." },
+  { n:7, tech:"Lösung erarbeiten",       farbe:"purple", titel:"Gemeinsam bauen",            text:"Nicht blind eine Rate hinwerfen. Erst fragen, was er hat – dann gemeinsam eine Lösung bauen, die heute für ihn funktioniert." },
+  { n:99, tech:"Abschluss",              farbe:"gold",   titel:"Deal festmachen",            text:"Lösung präsentieren und sofort festmachen. Kein Drumherum. Mund zu – wer zuerst redet, verliert." }
+];
+
+const EINWAND_PHILOSOPHIE = "Das Framework deckt jeden Einwand ab, weil es nicht auf den spezifischen Einwand zielt, sondern auf die Psychologie dahinter: Jeder Einwand ist entweder echt oder ein Vorwand. Entweder ein Wertproblem oder ein Logistikproblem. Entweder Angst oder fehlende Information. Aber — und das ist wichtig: Das Framework funktioniert nur so gut wie der, der es anwendet. Drei Dinge ersetzt kein Framework der Welt: echtes Zuhören, Tonalität und Erfahrung. Das Framework ist die Grundlage, nicht die Garantie.";
+
+// ── SCHLAGFERTIG (Closing Mastery · So wirst du schlagfertig) ──
+const SCHLAGFERTIG = {
+  intro: "Du kannst den besten Pitch haben, das beste Produkt, den besten Preis — und trotzdem den Deal verlieren. In dem Moment, in dem du sprachlos wirst. Prospects testen dich. Nicht aus Bosheit — sondern weil sie wissen wollen, ob sie dir vertrauen können. <strong>Wer unter Druck einknickt, bekommt kein Geld.</strong>",
+  kosten: [
+    { wer: "Kein Closer, der sprachlos wird", folge: "verliert Deals, die er eigentlich gewonnen hatte" },
+    { wer: "Kein Closer, der sich rechtfertigt", folge: "wird vom Prospect nicht ernst genommen" },
+    { wer: "Kein Closer, der defensiv reagiert", folge: "gibt die Kontrolle über das Gespräch ab" },
+    { wer: "Kein Closer, der schweigt", folge: "signalisiert Unsicherheit — genau das, was der Prospect spürt" }
+  ],
+  muster: "Schlagfertigkeit ist keine Begabung — sie ist ein <strong>trainiertes Muster</strong>. Sprachlosigkeit entsteht nicht, weil du zu langsam bist, sondern weil du nicht vorbereitet bist. Jeder unerwartete Angriff ist in Wirklichkeit eine von wenigen Situationen — du musst sie nur kennen. Und: Schlagfertigkeit ist nicht Aggressivität. Es ist <strong>Ruhe unter Druck</strong>.",
+  situationen: [
+    { n:1, name:"Angriff auf deine Credibility",
+      prospect:["„Hast du das selbst mal gemacht?“","„Wie alt bist du eigentlich?“","„Wie viel verdienst du?“"],
+      regel:"Nie defensiv werden — wer sich rechtfertigt, hat verloren.",
+      technik:"Mit Humor entwaffnen — dann Fokus umkehren",
+      du:["„Genug, um dieses Gespräch nicht führen zu MÜSSEN — und trotzdem führe ich es, weil ich glaube, dass du das Potenzial hast. Die bessere Frage ist: Was verdienst du gerade — und was willst du verdienen?“",
+          "„Die Frage ist nicht, ob ICH es gemacht habe. Die Frage ist: Bist du bereit, es zu machen?“"],
+      effekt:"Kein Rechtfertigen, kein Erklären, Humor — dann sofort zurück zum Prospect." },
+    { n:2, name:"Die provokante Preisfrage",
+      prospect:["„Wofür soll ich das bezahlen?“","„Das ist doch überteuert.“"],
+      regel:"Nie rechtfertigen — das ist das Signal, dass du selbst nicht an den Wert glaubst.",
+      technik:"Wert durch Gegenfrage sichtbar machen",
+      du:["„Was wäre es dir wert, wenn du das Problem ein für alle Mal löst?“",
+          "„Stell dir vor, du machst das nicht — wo stehst du in 12 Monaten? Was kostet dich das?“"],
+      effekt:"Der Prospect rechnet selbst. Du musst den Preis nicht mehr verteidigen." },
+    { n:3, name:"Der Konkurrenzvergleich",
+      prospect:["„XY macht das für die Hälfte.“","„Was könnt ihr, was andere nicht können?“"],
+      regel:"Nie die Konkurrenz schlechtreden — wirkt unsicher und klein.",
+      technik:"Anerkennen + Fokus verschieben",
+      du:["„Natürlich gibt es günstigere Optionen. Es geht ja auch gar nicht darum, was es kostet — sondern was es bringt. Was ist dein Ziel?“",
+          "„Ein Porsche kostet mehr als ein Polo — beide fahren dich ans Ziel. Aber in welchem Auto siehst du dich?“"],
+      effekt:"Du bleibst cool, erklärst nichts — und gibst ihm das Bild. Er entscheidet selbst." },
+    { n:4, name:"Das abrupte Desinteresse",
+      prospect:["„Eigentlich brauche ich das gar nicht.“","„Das ist nichts für mich.“"],
+      regel:"Nicht pitchen, nicht drängen — zurücktreten und konfrontieren.",
+      technik:"Stopp setzen — Widerspruch benennen",
+      du:["„Warte mal kurz. Du hast mir vorhin gesagt, dass [Problem] für dich ein echtes Thema ist. Was hat sich in den letzten 10 Minuten geändert?“"],
+      effekt:"Du erinnerst ihn an seinen eigenen Schmerz. Kein Druck — nur Klarheit." },
+    { n:5, name:"Die Garantiefrage",
+      prospect:["„Kannst du mir garantieren, dass es funktioniert?“","„Was passiert, wenn es nicht klappt?“"],
+      regel:"Keine leeren Versprechen — aber auch keine Entschuldigung.",
+      technik:"Gegenfrage + Commitment holen",
+      du:["„Kann ich dir garantieren, dass DU umsetzt? Das Einzige, was ich dir garantieren kann: Wir liefern 100 %. Bist du bereit, deinen Teil zu machen?“"],
+      effekt:"Du bleibst direkt, ehrlich — und holst sofort Commitment. Kein Weichspülen." },
+    { n:6, name:"Der Überlegenheitsangriff",
+      prospect:["„Davon verstehe ich mehr als du.“","„Ich mache das schon seit 10 Jahren.“"],
+      regel:"Nicht dagegen argumentieren — diese Diskussion kannst du nicht gewinnen.",
+      technik:"Zustimmen + Widerspruch einpflanzen",
+      du:["„Gut möglich. Und trotzdem bist du heute hier. Was hat dich hergebracht?“"],
+      effekt:"Du gibst ihm Recht — und zeigst gleichzeitig, dass sein Wissen ihn nicht weitergebracht hat." },
+    { n:7, name:"Der Test-Einwand",
+      prospect:["„Wir müssen das erstmal testen.“","„Lass uns klein anfangen.“"],
+      regel:"Kein halbherziges Ja annehmen — halb drin ist halb draußen.",
+      technik:"Warum klein? — Kosten des Halbherzigen benennen",
+      du:["„Was genau willst du testen? Ob es funktioniert — oder ob DU bereit bist, es umzusetzen?“",
+          "„Wer halbherzig startet, bekommt halbherzige Ergebnisse. Wenn du nicht all-in gehst, ist es lieber gar nicht.“"],
+      effekt:"Du zwingst ihn zur Entscheidung. Halb drin ist kein Geschäft." }
+  ],
+  mindset: [
+    "Schlagfertigkeit bedeutet nicht schnell reden — es bedeutet <strong>ruhig bleiben, wenn andere drängen</strong>.",
+    "Wer sich verteidigt, hat bereits verloren. <strong>Fragen stellen ist immer stärker als erklären.</strong>",
+    "Jeder Angriff vom Prospect ist ein <strong>verstecktes Kaufsignal</strong> — er wäre nicht dabei, wenn er kein Interesse hätte.",
+    "Dein Ziel ist nicht, den Prospect zu besiegen — sondern ihn zu verstehen."
+  ],
+  training: [
+    { tag:"Tag 1–2", text:"Schreib die Situationen auf. Für jede: Was wäre deine spontane Reaktion gewesen?" },
+    { tag:"Tag 3–4", text:"Lern die Formulierungen auswendig — wie ein Schauspieler. Wort für Wort." },
+    { tag:"Tag 5–7", text:"Roleplay mit einem Partner oder vor dem Spiegel. Er greift an, du reagierst — ohne Pause." },
+    { tag:"Ab Woche 2", text:"In echten Calls: Beobachte, welche Situation auftaucht. Reagiere bewusst." }
+  ],
+  schluss: "Wer vorbereitet ist, ist nie sprachlos."
+};
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function formatFull(text) {
+  var parts = text.split('[PAUSE]');
+  var html = '';
+  for (var i = 0; i < parts.length; i++) {
+    var lines = parts[i].split('\n').filter(function(l) { return l.trim() !== ''; });
+    lines.forEach(function(line) {
+      html += '<div style="margin: 4px 0;">' + escapeHtml(line.trim()) + '</div>';
+    });
+    if (i < parts.length - 1) {
+      html += '<div class="pause-marker">Pause</div>';
+    }
+  }
+  return html;
+}
+
+function renderNav() {
+  var navEl = document.getElementById('nav-phases');
+  var html = '';
+  PHASES.forEach(function(p) {
+    var num = String(p.id).padStart(2, '0');
+    html += '<div class="nav-item" data-phase="' + p.id + '"><span class="nav-num">' + num + '</span> ' + p.nav + '</div>';
+  });
+  navEl.innerHTML = html;
+}
+
+function attachNavHandlers() {
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    if (item._wired) return;
+    item._wired = true;
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+      item.classList.add('active');
+      routeNav(item);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
+function routeNav(item) {
+  var view = item.dataset.view;
+  if (view === 'fundament')      { renderFundament(); return; }
+  if (view === 'techniken')      { renderTechniken(); return; }
+  if (view === 'einwandsystem')  { renderEinwandSystem(); return; }
+  if (view === 'schlagfertig')   { renderSchlagfertig(); return; }
+  renderPhase(item.dataset.phase);
+}
+
+function renderPhase(id) {
+  var c = document.getElementById('phase-content');
+
+  if (id === 'tonality') {
+    var html = '<div class="phase-content">';
+    html += '<div class="phase-tag">Bonus</div>';
+    html += '<h1 class="phase-title">Tonalität</h1>';
+    html += '<div class="phase-goal"><strong>Hinweis:</strong> Das Skript ist nur halb so wichtig wie <strong>wie</strong> du es sprichst. Diese Tonalitäts-Tags findest du im Skript wieder — hier die Definitionen.</div>';
+    html += '<div class="tonal-grid">';
+    TONALITAET.forEach(function(t) {
+      html += '<div class="tonal-card"><div class="tonal-card-title">' + t.title + '</div><div class="tonal-card-text">' + t.text + '</div></div>';
+    });
+    html += '</div>';
+    MERKSAETZE.forEach(function(m) {
+      html += '<div class="merksatz">' + m + '</div>';
+    });
+    html += '</div>';
+    c.innerHTML = html;
+    return;
+  }
+
+  var p = PHASES.find(function(x) { return x.id === id; });
+  if (!p) return;
+
+  var num = String(p.id).padStart(2, '0');
+  var html = '<div class="phase-content">';
+  html += '<div class="phase-tag">Phase ' + num + '</div>';
+  html += '<h1 class="phase-title">' + p.title + '</h1>';
+  html += '<div class="phase-goal"><strong>Ziel:</strong> ' + p.goal + '</div>';
+
+  var pm = PHASE_MUSTER[p.id];
+  if (pm) {
+    html += '<div class="muster-box">';
+    html += '<div class="muster-eyebrow">Das Muster dahinter</div>';
+    html += '<div class="muster-text">' + pm.muster + '</div>';
+    if (pm.munition) {
+      html += '<div class="munition-line">' + pm.munition.replace(/^(LADEN[^:]*:|EINSETZEN[^:]*:|KURZ & MÄCHTIG\.)/, '<strong>$1</strong>') + '</div>';
+    }
+    html += '</div>';
+  }
+
+  p.blocks.forEach(function(b, i) {
+    var toneTags = '';
+    if (b.tones && b.tones.length) {
+      toneTags = '<div class="tone-row">';
+      b.tones.forEach(function(t) {
+        toneTags += '<span class="tone-tag tone-' + t + '">' + t + '</span>';
+      });
+      toneTags += '</div>';
+    }
+
+    html += '<div class="block" data-idx="' + i + '">';
+    html += '<div class="block-head">';
+    html += '<div class="block-head-left">';
+    html += toneTags;
+    html += '<div class="block-preview">' + b.preview + '</div>';
+    html += '</div>';
+    html += '<span class="block-chevron">▼</span>';
+    html += '</div>';
+    html += '<div class="block-body">';
+    html += '<div class="block-full">' + formatFull(b.full) + '</div>';
+    if (b.why) {
+      html += '<div class="why-box"><strong>Wirkung:</strong> ' + b.why + '</div>';
+    }
+    html += '</div>';
+    html += '</div>';
+  });
+
+  if (p.tips) {
+    p.tips.forEach(function(t) {
+      html += '<div class="tip"><span class="tip-dot">●</span><div>' + t + '</div></div>';
+    });
+  }
+
+  html += '</div>';
+  c.innerHTML = html;
+
+  document.querySelectorAll('.block-head').forEach(function(h) {
+    h.addEventListener('click', function() {
+      h.parentElement.classList.toggle('open');
+    });
+  });
+}
+
+function formatKonter(text) {
+  var lines = text.split('\n');
+  var out = '';
+  lines.forEach(function(line) {
+    line = line.trim();
+    if (line === '') return;
+    if (line.charAt(0) === '→') {
+      out += '<div class="konter-step">' + escapeHtml(line) + '</div>';
+    } else if (line.charAt(0) === '[') {
+      out += '<div class="konter-cue">' + escapeHtml(line) + '</div>';
+    } else {
+      out += '<div>' + escapeHtml(line) + '</div>';
+    }
+  });
+  return out;
+}
+
+function renderEinwaende() {
+  var list = document.getElementById('einwand-list');
+  var html = '';
+  EINWAENDE.forEach(function(e, i) {
+    html += '<div class="einwand" data-idx="' + i + '">';
+    html += '<div class="einwand-head">';
+    html += '<span class="einwand-num">' + (i + 1) + '</span>';
+    html += '<span class="einwand-title">' + e.title + '</span>';
+    html += '<span class="einwand-chevron">▼</span>';
+    html += '</div>';
+    html += '<div class="einwand-body">';
+    html += '<div class="einwand-q">' + e.q + '</div>';
+    html += '<div class="einwand-a">' + formatKonter(e.a) + '</div>';
+    if (e.muster) {
+      html += '<div class="einwand-muster"><span class="einwand-muster-label">Muster</span>' + e.muster + '</div>';
+    }
+    html += '</div>';
+    html += '</div>';
+  });
+  list.innerHTML = html;
+
+  document.querySelectorAll('.einwand-head').forEach(function(h) {
+    h.addEventListener('click', function() {
+      h.parentElement.classList.toggle('open');
+    });
+  });
+}
+
+function renderConversationOperator() {
+  var buttonWrap = document.getElementById('operator-buttons');
+  var result = document.getElementById('operator-result');
+  if (!buttonWrap || !result) return;
+
+  var html = '';
+  CONVERSATION_OPERATOR_ORDER.forEach(function(key) {
+    var cls = key === 'PHILOSOPHIE' ? 'operator-btn philosophy' : 'operator-btn';
+    html += '<button class="' + cls + '" data-operator="' + key + '">' + key + '</button>';
+  });
+  buttonWrap.innerHTML = html;
+
+  buttonWrap.querySelectorAll('.operator-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key = btn.dataset.operator;
+      var item = CONVERSATION_OPERATORS[key];
+      if (!item) return;
+      buttonWrap.querySelectorAll('.operator-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var out = '<div class="operator-kicker">' + escapeHtml(key) + ' → Methode</div>';
+      out += '<div class="operator-method">' + escapeHtml(item.method) + '</div>';
+      out += '<div class="operator-goal"><strong>Ziel:</strong> ' + escapeHtml(item.goal) + '</div>';
+      out += '<div class="tk-label">Operator-Fragen</div>';
+      out += '<ul class="operator-list">';
+      item.questions.forEach(function(q) {
+        out += '<li>' + escapeHtml(q) + '</li>';
+      });
+      out += '</ul>';
+      out += '<div class="operator-merk">' + escapeHtml(item.merk) + '</div>';
+      result.innerHTML = out;
+    });
+  });
+}
+
+function renderFundament() {
+  var c = document.getElementById('phase-content');
+  var F = FUNDAMENT;
+  var h = '<div class="phase-content">';
+  h += '<div class="phase-tag">Grundlagen</div>';
+  h += '<h1 class="phase-title">Fundament</h1>';
+  h += '<div class="section-lead">Bevor du eine einzige Phase sprichst: Das ist das Warum hinter dem ganzen System. Wer das versteht, klingt nie nach Skript.</div>';
+
+  // Prinzip
+  h += '<div class="muster-box">';
+  h += '<div class="muster-eyebrow">' + F.prinzip.title + '</div>';
+  h += '<div class="merksatz" style="margin:4px 0 14px;border:none;padding:0;font-size:26px;">„' + F.prinzip.lead + '"</div>';
+  h += '<div class="muster-text">' + F.prinzip.text + '</div>';
+  h += '<div class="munition-line">';
+  F.prinzip.rules.forEach(function(r, i){ h += '<div style="margin:4px 0;"><strong>' + (i+1) + '.</strong> ' + r + '</div>'; });
+  h += '</div></div>';
+
+  // Grundformel
+  h += '<div class="fund-card wide" style="margin-bottom:14px;">';
+  h += '<div class="fund-card-title">' + F.formel.title + '</div>';
+  h += '<div class="fund-formula-head">' + F.formel.head + '</div>';
+  var f = F.formel.formula.replace(/×/g, '<em>×</em>').replace(/= Abschluss/, '<em>= Abschluss</em>');
+  h += '<div class="fund-formula">' + f + '</div>';
+  h += '<div class="tk-regel" style="margin-top:14px;">' + F.formel.note + '</div>';
+  h += '</div>';
+
+  // Ist / Nicht
+  h += '<div class="fund-grid">';
+  h += '<div class="fund-card is-good"><div class="fund-card-title">' + F.ist.title + '</div><ul class="pill-list">';
+  F.ist.items.forEach(function(i){ h += '<li>' + i + '</li>'; });
+  h += '</ul></div>';
+  h += '<div class="fund-card is-bad"><div class="fund-card-title">' + F.nicht.title + '</div><ul class="pill-list">';
+  F.nicht.items.forEach(function(i){ h += '<li>' + i + '</li>'; });
+  h += '</ul></div>';
+  h += '</div>';
+
+  // Psychologie
+  h += '<div class="fund-card wide" style="margin-bottom:14px;">';
+  h += '<div class="fund-card-title">' + F.psycho.title + '</div>';
+  F.psycho.points.forEach(function(p){ h += '<div class="psycho-point">' + p + '</div>'; });
+  h += '</div>';
+
+  // Warum 90%
+  h += '<div class="fund-card wide is-bad">';
+  h += '<div class="fund-card-title">' + F.warum90.title + '</div><ul class="pill-list">';
+  F.warum90.items.forEach(function(i){ h += '<li>' + i + '</li>'; });
+  h += '</ul></div>';
+
+  h += '</div>';
+  c.innerHTML = h;
+}
+
+function renderTechniken() {
+  var c = document.getElementById('phase-content');
+  var h = '<div class="phase-content">';
+  h += '<div class="phase-tag">Werkzeuge</div>';
+  h += '<h1 class="phase-title">10 Techniken</h1>';
+  h += '<div class="section-lead">Das sind deine Bausteine. Du ziehst sie je nach Situation — nicht stur von oben nach unten. Klick auf eine Technik → Aufbau, Beispiel und das Muster dahinter.</div>';
+
+  TECHNIKEN.forEach(function(t){
+    h += '<div class="technik farbe-' + t.farbe + '">';
+    h += '<div class="technik-head">';
+    h += '<span class="technik-num">' + t.n + '</span>';
+    h += '<div class="technik-head-mid"><div class="technik-name">' + t.name + '</div>';
+    h += '<div class="technik-zweck farbe-' + t.farbe + '">' + t.zweck + '</div></div>';
+    h += '<span class="technik-chevron">▼</span>';
+    h += '</div>';
+    h += '<div class="technik-body">';
+    h += '<div class="tk-row"><div class="tk-label">Aufbau</div><div class="tk-aufbau">' + t.aufbau + '</div></div>';
+    h += '<div class="tk-row"><div class="tk-label">Beispiel</div><div class="tk-beispiel">' + t.beispiel + '</div></div>';
+    h += '<div class="tk-row"><div class="tk-label">Das Muster</div><div class="tk-regel">' + t.regel + '</div></div>';
+    h += '</div></div>';
+  });
+
+  h += '</div>';
+  c.innerHTML = h;
+
+  document.querySelectorAll('.technik-head').forEach(function(head){
+    head.addEventListener('click', function(){
+      head.parentElement.classList.toggle('open');
+    });
+  });
+  if (document.querySelector('.mode-btn[data-mode="training"]').classList.contains('active')) {
+    document.querySelectorAll('.technik').forEach(function(t){ t.classList.add('open'); });
+  }
+}
+
+function renderEinwandSystem() {
+  var c = document.getElementById('phase-content');
+  var h = '<div class="phase-content">';
+  h += '<div class="phase-tag">Werkzeuge</div>';
+  h += '<h1 class="phase-title">Einwand-System</h1>';
+  h += '<div class="section-lead">Beim häufigsten Einwand — „zu teuer" — gewinnst du nicht mit einem Spruch, sondern mit einer Reihenfolge. Zuerst die zwei Werkzeuge, dann der komplette Ablauf.</div>';
+
+  // Zwei Werkzeuge
+  EINWAND_TOOLS.forEach(function(t){
+    h += '<div class="tool-card">';
+    h += '<div class="tool-name farbe-' + t.farbe + '">' + t.name + '</div>';
+    h += '<div class="tk-row"><div class="tk-label">Aufbau</div><div class="tk-aufbau">' + t.aufbau + '</div></div>';
+    h += '<div class="tk-row"><div class="tk-label">Beispiel</div><div class="tk-beispiel">' + t.beispiel + '</div></div>';
+    h += '<div class="tk-row"><div class="tk-label">Ziel</div><div class="tk-regel">' + t.ziel + '</div></div>';
+    h += '<div class="tk-row"><div class="tk-label">Logik</div><div class="tk-regel">' + t.logik + '</div></div>';
+    h += '</div>';
+  });
+
+  // Unterschied
+  h += '<div class="info-band">' + EINWAND_UNTERSCHIED + '</div>';
+
+  // Flow
+  h += '<div class="muster-eyebrow" style="margin:28px 0 4px;">Der komplette Flow · Einwand „zu teuer / kein Geld"</div>';
+  h += '<div class="flow">';
+  EINWAND_FLOW.forEach(function(s, idx){
+    var label = (s.n === 99) ? '✓' : s.n;
+    h += '<div class="flow-step">';
+    h += '<div class="flow-line"></div>';
+    h += '<div class="flow-dot farbe-' + s.farbe + '" style="color:var(--' + (s.farbe === 'teal' ? 'gold' : s.farbe) + ');">' + label + '</div>';
+    h += '<div class="flow-card">';
+    h += '<div class="flow-tech farbe-' + s.farbe + '">' + (s.n === 99 ? s.tech.toUpperCase() : ('Schritt ' + s.n + ' · ' + s.tech)) + '</div>';
+    h += '<div class="flow-titel">' + s.titel + '</div>';
+    h += '<div class="flow-text">' + s.text + '</div>';
+    h += '</div></div>';
+  });
+  h += '</div>';
+
+  // Philosophie
+  h += '<div class="philo-band">' + EINWAND_PHILOSOPHIE + '</div>';
+
+  h += '</div>';
+  c.innerHTML = h;
+}
+
+function renderSchlagfertig() {
+  var c = document.getElementById('phase-content');
+  var S = SCHLAGFERTIG;
+  var h = '<div class="phase-content">';
+  h += '<div class="phase-tag">Werkzeuge</div>';
+  h += '<h1 class="phase-title">Schlagfertig</h1>';
+  h += '<div class="section-lead">' + S.intro + '</div>';
+
+  // Kosten-Tabelle
+  h += '<div class="sf-cost">';
+  S.kosten.forEach(function(k){
+    h += '<div class="sf-cost-row"><div class="sf-cost-wer">' + k.wer + '</div><div class="sf-cost-arrow">→</div><div class="sf-cost-folge">' + k.folge + '</div></div>';
+  });
+  h += '</div>';
+
+  // Muster
+  h += '<div class="muster-box"><div class="muster-eyebrow">Schlagfertigkeit ist ein trainiertes Muster</div><div class="muster-text">' + S.muster + '</div></div>';
+
+  // Situationen
+  h += '<div class="muster-eyebrow" style="margin:30px 0 14px;">Die 7 Situationen — Angriff, Technik, Antwort</div>';
+  S.situationen.forEach(function(s){
+    h += '<div class="sf-card">';
+    h += '<div class="sf-head"><span class="sf-num">' + s.n + '</span><span class="sf-name">' + s.name + '</span><span class="technik-chevron">▼</span></div>';
+    h += '<div class="sf-body">';
+    // Prospect
+    h += '<div class="sf-block sf-prospect"><span class="sf-tag sf-tag-p">Prospect</span>';
+    s.prospect.forEach(function(p){ h += '<div class="sf-line">' + p + '</div>'; });
+    h += '</div>';
+    // Regel + Technik
+    h += '<div class="sf-regel">✕ ' + s.regel + '</div>';
+    h += '<div class="sf-technik"><span class="sf-technik-label">Technik</span>' + s.technik + '</div>';
+    // Du
+    h += '<div class="sf-block sf-du"><span class="sf-tag sf-tag-d">Du</span>';
+    s.du.forEach(function(d){ h += '<div class="sf-line">' + d + '</div>'; });
+    h += '</div>';
+    // Effekt
+    h += '<div class="sf-effekt">→ ' + s.effekt + '</div>';
+    h += '</div></div>';
+  });
+
+  // Mindset
+  h += '<div class="fund-card wide" style="margin:24px 0 14px;"><div class="fund-card-title">Das Mindset hinter Schlagfertigkeit</div>';
+  S.mindset.forEach(function(m){ h += '<div class="psycho-point">' + m + '</div>'; });
+  h += '</div>';
+
+  // Training
+  h += '<div class="muster-eyebrow" style="margin:24px 0 12px;">Dein Training für die nächste Woche</div>';
+  h += '<div class="sf-train">';
+  S.training.forEach(function(t){
+    h += '<div class="sf-train-row"><div class="sf-train-tag">' + t.tag + '</div><div class="sf-train-text">' + t.text + '</div></div>';
+  });
+  h += '</div>';
+
+  h += '<div class="merksatz" style="margin-top:26px;">„' + S.schluss + '"</div>';
+
+  h += '</div>';
+  c.innerHTML = h;
+
+  document.querySelectorAll('.sf-head').forEach(function(head){
+    head.addEventListener('click', function(){ head.parentElement.classList.toggle('open'); });
+  });
+  if (document.querySelector('.mode-btn[data-mode="training"]').classList.contains('active')) {
+    document.querySelectorAll('.sf-card').forEach(function(x){ x.classList.add('open'); });
+  }
+}
+
+document.querySelectorAll('.aside-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.aside-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.aside-section').forEach(function(s) { s.classList.remove('active'); });
+    tab.classList.add('active');
+    document.querySelector('.aside-section[data-section="' + tab.dataset.aside + '"]').classList.add('active');
+  });
+});
+
+// Storage-Shim: nutzt window.storage falls vorhanden (claude.ai),
+// sonst localStorage — damit Speichern auch als heruntergeladene Datei funktioniert.
+if (!window.storage) {
+  window.storage = {
+    get: function(k){ try { var v = localStorage.getItem(k); return Promise.resolve(v === null ? null : { key:k, value:v }); } catch(e){ return Promise.resolve(null); } },
+    set: function(k,v){ try { localStorage.setItem(k,v); return Promise.resolve({ key:k, value:v }); } catch(e){ return Promise.reject(e); } },
+    delete: function(k){ try { localStorage.removeItem(k); return Promise.resolve({ key:k, deleted:true }); } catch(e){ return Promise.reject(e); } },
+    list: function(prefix){ var keys=[]; try { for (var i=0;i<localStorage.length;i++){ var key=localStorage.key(i); if(!prefix||key.indexOf(prefix)===0) keys.push(key); } } catch(e){} return Promise.resolve({ keys:keys }); }
+  };
+}
+
+var leads = {};
+var currentLeadId = null;
+
+async function loadLeads() {
+  try {
+    var result = await window.storage.list('lead:');
+    if (result && result.keys) {
+      for (var i = 0; i < result.keys.length; i++) {
+        var key = result.keys[i];
+        try {
+          var r = await window.storage.get(key);
+          if (r) leads[key] = JSON.parse(r.value);
+        } catch (e) {}
+      }
+    }
+  } catch (e) {}
+  renderLeadSelector();
+}
+
+function renderLeadSelector() {
+  var sel = document.getElementById('lead-select');
+  sel.innerHTML = '<option value="">-- Neuer Lead --</option>';
+  Object.keys(leads).forEach(function(id) {
+    var opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = leads[id].name || id.replace('lead:', '');
+    sel.appendChild(opt);
+  });
+  if (currentLeadId) sel.value = currentLeadId;
+}
+
+function loadLeadIntoForm(id) {
+  if (!id || !leads[id]) {
+    clearForm();
+    currentLeadId = null;
+    return;
+  }
+  currentLeadId = id;
+  var l = leads[id];
+  document.getElementById('note-name').value = l.name || '';
+  document.getElementById('note-job').value = l.job || '';
+  document.getElementById('note-finance').value = l.finance || '';
+  document.getElementById('note-invest').value = l.invest || '';
+  document.getElementById('note-pain').value = l.pain || '';
+  document.getElementById('note-situation').value = l.situation || '';
+  document.getElementById('note-goal').value = l.goal || '';
+  document.getElementById('note-einwaende').value = l.einwaende || '';
+  document.getElementById('note-personal').value = l.personal || '';
+  document.getElementById('note-termin').value = l.termin || '';
+}
+
+function clearForm() {
+  ['name', 'job', 'finance', 'invest', 'pain', 'situation', 'goal', 'einwaende', 'personal', 'termin'].forEach(function(f) {
+    document.getElementById('note-' + f).value = '';
+  });
+}
+
+async function saveLead() {
+  var name = document.getElementById('note-name').value.trim();
+  if (!name) {
+    alert('Bitte gib einen Namen ein.');
+    return;
+  }
+  var id = currentLeadId || ('lead:' + Date.now());
+  var data = {
+    name: name,
+    job: document.getElementById('note-job').value,
+    finance: document.getElementById('note-finance').value,
+    invest: document.getElementById('note-invest').value,
+    pain: document.getElementById('note-pain').value,
+    situation: document.getElementById('note-situation').value,
+    goal: document.getElementById('note-goal').value,
+    einwaende: document.getElementById('note-einwaende').value,
+    personal: document.getElementById('note-personal').value,
+    termin: document.getElementById('note-termin').value,
+    updated: new Date().toISOString()
+  };
+  leads[id] = data;
+  currentLeadId = id;
+  try {
+    await window.storage.set(id, JSON.stringify(data));
+    var ind = document.getElementById('save-indicator');
+    ind.classList.add('show');
+    setTimeout(function() { ind.classList.remove('show'); }, 2000);
+    renderLeadSelector();
+  } catch (e) {
+    alert('Fehler beim Speichern: ' + e.message);
+  }
+}
+
+async function deleteLead() {
+  if (!currentLeadId) {
+    clearForm();
+    return;
+  }
+  if (!confirm('Lead "' + leads[currentLeadId].name + '" wirklich löschen?')) return;
+  try {
+    await window.storage.delete(currentLeadId);
+    delete leads[currentLeadId];
+    currentLeadId = null;
+    clearForm();
+    renderLeadSelector();
+  } catch (e) {
+    alert('Fehler beim Löschen: ' + e.message);
+  }
+}
+
+document.getElementById('lead-select').addEventListener('change', function(e) {
+  loadLeadIntoForm(e.target.value);
+});
+
+document.getElementById('new-lead').addEventListener('click', function() {
+  currentLeadId = null;
+  clearForm();
+  document.getElementById('lead-select').value = '';
+  document.getElementById('note-name').focus();
+});
+
+document.getElementById('save-lead').addEventListener('click', saveLead);
+document.getElementById('delete-lead').addEventListener('click', deleteLead);
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var training = btn.dataset.mode === 'training';
+    document.body.classList.toggle('training-on', training);
+    document.querySelectorAll('.block').forEach(function(d) { d.classList.toggle('open', training); });
+    document.querySelectorAll('.technik').forEach(function(d) { d.classList.toggle('open', training); });
+    document.querySelectorAll('.sf-card').forEach(function(d) { d.classList.toggle('open', training); });
+  });
+});
+
+renderNav();
+attachNavHandlers();
+renderEinwaende();
+renderConversationOperator();
+loadLeads();
+document.querySelector('.nav-item[data-view="fundament"]').classList.add('active');
+renderFundament();
+</script>
+
+</body>
+</html>
