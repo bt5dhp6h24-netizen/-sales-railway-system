@@ -1101,39 +1101,69 @@ const PHASES = [
         full: "Hey [NAME], grüß dich erstmal. Wie läuft dein Tag bisher?"
       },
       {
-        tones: ["LOCKER", "RUHIG"],
-        preview: "Ich habe mir für unser Gespräch ungefähr 30 Minuten Zeit geblockt. Normalerweise brauchen wir gar nicht so lange. Meistens sind wir nach 15 bis 20 Minuten durch. Passt das Ganze soweit?",
-        full: "Das freut mich. Danke der Nachfrage, bei mir soweit auch.\n[PAUSE]\nIch habe mir für unser Gespräch ungefähr 30 Minuten Zeit geblockt. Normalerweise brauchen wir gar nicht so lange. Meistens sind wir nach 15 bis 20 Minuten durch. Passt das Ganze soweit?"
+        tones: ["LOCKER"],
+        preview: "Das freut mich. Danke der Nachfrage, bei mir soweit auch.",
+        full: "Das freut mich. Danke der Nachfrage, bei mir soweit auch."
       },
       {
-        tones: ["RUHIG", "KLAR"],
-        preview: "In diesen 20 Minuten wird es gar nicht darum gehen, dir irgendein Produkt zu verkaufen.",
-        full: "Perfekt.\n[PAUSE]\nIn diesen 20 Minuten wird es gar nicht darum gehen, dir irgendein Produkt zu verkaufen. Mir geht es heute erstmal darum, zu verstehen, wo du aktuell stehst, welches Ziel du erreichen möchtest und ob wir dir auf diesem Weg überhaupt weiterhelfen können. Ich hoffe, das ist für dich erstmal klar verständlich.\n[PAUSE]\nAlles klar, dann lass uns gerne mal starten."
+        tones: ["RUHIG"],
+        preview: "Ich habe mir für unser Gespräch ungefähr 30 Minuten Zeit geblockt. Normalerweise brauchen wir gar nicht so lange. Meistens sind wir nach 15 bis 20 Minuten durch. Passt das Ganze soweit?",
+        full: "Ich habe mir für unser Gespräch ungefähr 30 Minuten Zeit geblockt. Normalerweise brauchen wir gar nicht so lange. Meistens sind wir nach 15 bis 20 Minuten durch. Passt das Ganze soweit?"
+      },
+      {
+        tones: ["LOCKER"],
+        preview: "Perfekt.",
+        full: "Perfekt."
+      },
+      {
+        tones: ["KLAR"],
+        preview: "In diesen 20 Minuten wird es gar nicht darum gehen, dir irgendein Produkt zu verkaufen. Mir geht es heute erstmal darum, zu verstehen, wo du aktuell stehst, welches Ziel du erreichen möchtest und ob wir dir auf diesem Weg überhaupt weiterhelfen können. Ich hoffe, das ist für dich erstmal klar verständlich.",
+        full: "In diesen 20 Minuten wird es gar nicht darum gehen, dir irgendein Produkt zu verkaufen. Mir geht es heute erstmal darum, zu verstehen, wo du aktuell stehst, welches Ziel du erreichen möchtest und ob wir dir auf diesem Weg überhaupt weiterhelfen können. Ich hoffe, das ist für dich erstmal klar verständlich."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Alles klar, dann lass uns gerne mal starten.",
+        full: "Alles klar, dann lass uns gerne mal starten."
       },
       {
         tones: ["NEUGIERIG"],
-        preview: "Ich erzähle dir kurz, wer ich bin und warum ich das Ganze überhaupt mache.",
+        preview: "Ich erzähle dir kurz, wer ich bin und warum ich das Ganze überhaupt mache. Danach interessiert mich natürlich auch deine Geschichte, damit ich verstehe, wo du gerade stehst und was du erreichen möchtest.",
         full: "Ich erzähle dir kurz, wer ich bin und warum ich das Ganze überhaupt mache. Danach interessiert mich natürlich auch deine Geschichte, damit ich verstehe, wo du gerade stehst und was du erreichen möchtest."
       },
       {
-        tones: ["AUTHENTISCH", "KLAR"],
+        tones: ["AUTHENTISCH"],
         preview: "Ich bin Elmin und beschäftige mich seit rund drei Jahren intensiv mit dem Thema Vermögensaufbau.",
         full: "Ich bin Elmin und beschäftige mich seit rund drei Jahren intensiv mit dem Thema Vermögensaufbau."
       },
       {
-        tones: ["AUTHENTISCH", "BESORGT"],
-        preview: "Der Auslöser war, dass ich schon mit 16 gesehen habe, wie ältere Menschen Pfandflaschen sammeln mussten.",
+        tones: ["AUTHENTISCH"],
+        preview: "Der Auslöser war, dass ich schon mit 16 gesehen habe, wie ältere Menschen Pfandflaschen sammeln mussten. Gleichzeitig habe ich bei meinem Vater erlebt, dass jahrzehntelange harte Arbeit allein keine finanzielle Sicherheit garantiert.",
         full: "Der Auslöser war, dass ich schon mit 16 gesehen habe, wie ältere Menschen Pfandflaschen sammeln mussten. Gleichzeitig habe ich bei meinem Vater erlebt, dass jahrzehntelange harte Arbeit allein keine finanzielle Sicherheit garantiert."
       },
       {
-        tones: ["KLAR", "RUHIG"],
-        preview: "Genau deshalb führe ich heute solche Gespräche.",
-        full: "Genau deshalb führe ich heute solche Gespräche. Mittlerweile durfte ich schon viele Gespräche mit Menschen führen und dabei habe ich gemerkt, dass die meisten gar nicht am fehlenden Wissen scheitern, sondern daran, dass sie ohne klaren Plan investieren.\n[PAUSE]\nMir geht es deshalb nicht darum, Menschen irgendein Produkt zu verkaufen. Ich möchte zuerst verstehen, welches Ziel jemand erreichen möchte und ob wir dafür überhaupt den passenden Weg haben.\n[PAUSE]\nSo viel erst einmal zu mir."
+        tones: ["KLAR"],
+        preview: "Genau deshalb führe ich heute solche Gespräche. Mittlerweile durfte ich schon viele Gespräche mit Menschen führen und dabei habe ich gemerkt, dass die meisten gar nicht am fehlenden Wissen scheitern, sondern daran, dass sie ohne klaren Plan investieren.",
+        full: "Genau deshalb führe ich heute solche Gespräche. Mittlerweile durfte ich schon viele Gespräche mit Menschen führen und dabei habe ich gemerkt, dass die meisten gar nicht am fehlenden Wissen scheitern, sondern daran, dass sie ohne klaren Plan investieren."
+      },
+      {
+        tones: ["RUHIG"],
+        preview: "Mir geht es deshalb nicht darum, Menschen irgendein Produkt zu verkaufen. Ich möchte zuerst verstehen, welches Ziel jemand erreichen möchte und ob wir dafür überhaupt den passenden Weg haben.",
+        full: "Mir geht es deshalb nicht darum, Menschen irgendein Produkt zu verkaufen. Ich möchte zuerst verstehen, welches Ziel jemand erreichen möchte und ob wir dafür überhaupt den passenden Weg haben."
+      },
+      {
+        tones: ["LOCKER"],
+        preview: "So viel erst einmal zu mir.",
+        full: "So viel erst einmal zu mir."
+      },
+      {
+        tones: ["NEUGIERIG"],
+        preview: "Jetzt interessiert mich natürlich deine Geschichte:",
+        full: "Jetzt interessiert mich natürlich deine Geschichte:"
       },
       {
         tones: ["NEUGIERIG"],
         preview: "Wer bist du, was machst du aktuell und warum ist das Thema Investieren gerade für dich interessant?",
-        full: "Jetzt interessiert mich natürlich deine Geschichte:\n[PAUSE]\nWer bist du, was machst du aktuell und warum ist das Thema Investieren gerade für dich interessant?"
+        full: "Wer bist du, was machst du aktuell und warum ist das Thema Investieren gerade für dich interessant?"
       }
     ],
     tips: [
