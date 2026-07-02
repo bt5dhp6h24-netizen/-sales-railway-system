@@ -1098,31 +1098,49 @@ const PHASES = [
       {
         tones: ["HUMORVOLL"],
         preview: "Hey [NAME], grüß dich erstmal. Wie läuft dein Tag bisher?",
-        full: "Hey [NAME], grüß dich erstmal.\nWie läuft dein Tag bisher?\n[PAUSE]\nPerfekt.",
-        why: "Lockerer Einstieg. Keine Hast. Du startest auf Augenhöhe."
+        full: "Hey [NAME], grüß dich erstmal.\nWie läuft dein Tag bisher?\n[PAUSE]",
+        why: "Lockerer Einstieg. Keine Hast. Du startest auf Augenhöhe. Warte hier wirklich auf seine Antwort."
       },
       {
         tones: ["LOCKER", "RUHIG"],
-        preview: "Ganz kurz vorab auch: Ich will dir heute erstmal nichts verkaufen.",
-        full: "Ganz kurz vorab auch:\nIch will dir heute erstmal nichts verkaufen.\n[PAUSE]",
-        why: "Du nimmst sofort den Verkaufsdruck raus. Ab jetzt fühlt er sich nicht mehr bedroht."
+        preview: "Ich hab mir für unser Gespräch ca. 30 Minuten geblockt — meistens sind wir nach 15-20 Min durch. Passt das?",
+        full: "Das freut mich. Danke der Nachfrage, bei mir soweit auch.\n[PAUSE]\nIch habe mir für unser Gespräch ungefähr 30 Minuten Zeit geblockt.\nNormalerweise brauchen wir gar nicht so lange.\nMeistens sind wir nach 15 bis 20 Minuten durch.\nPasst das Ganze soweit?\n[PAUSE]",
+        why: "Du gibst von Anfang an einen klaren Zeitrahmen vor. Das schafft Struktur und Sicherheit — er weiß, worauf er sich einlässt. Fast immer kommt hier ein klares 'Ja'."
+      },
+      {
+        tones: ["RUHIG", "KLAR"],
+        preview: "In diesen 20 Minuten geht's nicht ums Verkaufen — sondern darum, zu verstehen, wo du stehst und ob wir dir helfen können.",
+        full: "Perfekt.\n[PAUSE]\nIn diesen 20 Minuten wird es gar nicht darum gehen,\ndir irgendein Produkt zu verkaufen.\nMir geht es heute erstmal darum,\nzu verstehen, wo du aktuell stehst,\nwelches Ziel du erreichen möchtest\nund ob wir dir auf diesem Weg überhaupt weiterhelfen können.\nIch hoffe, das ist für dich erstmal klar verständlich.\n[PAUSE]\nAlles klar, dann lass uns gerne mal starten.",
+        why: "Der wichtigste Satz im ganzen Einstieg. Du nimmst sofort den Verkaufsdruck raus — ab jetzt fühlt er sich nicht mehr bedroht und öffnet sich leichter."
       },
       {
         tones: ["NEUGIERIG"],
-        preview: "Ich möchte mir einfach mal anschauen, wie du aktuell investierst...",
-        full: "Ich möchte mir einfach mal anschauen,\nwie du aktuell investierst,\nwie dein Depot aufgebaut ist\nund ob da wirklich schon eine klare Strategie dahinter steckt.\n[PAUSE]",
-        why: "Klares Ziel. Du übernimmst die Führung — ohne aufdringlich zu sein."
+        preview: "Ich erzähl dir kurz, wer ich bin — danach interessiert mich deine Geschichte.",
+        full: "Ich erzähle dir kurz, wer ich bin und warum ich das Ganze überhaupt mache.\nDanach interessiert mich natürlich auch deine Geschichte,\ndamit ich verstehe, wo du gerade stehst und was du erreichen möchtest.\n[PAUSE]",
+        why: "Klares Ziel für die nächsten Minuten. Du übernimmst die Führung — ohne aufdringlich zu wirken."
       },
       {
-        tones: ["BESORGT"],
-        preview: "Viele investieren heutzutage zwar... aber wissen nicht wirklich warum.",
-        full: "Viele investieren heutzutage zwar schon …\naber wissen trotzdem nicht wirklich,\nwarum bestimmte ETFs oder Aktien überhaupt im Depot liegen.\n[PAUSE]\nUnd genau da entstehen später oft die größten Fehler.\n[PAUSE]",
-        why: "Problem allgemein framen. Er fühlt sich nicht angegriffen — aber du säst den Zweifel."
+        tones: ["AUTHENTISCH", "KLAR"],
+        preview: "Ich bin Elmin und beschäftige mich seit rund drei Jahren intensiv mit Vermögensaufbau.",
+        full: "Ich bin Elmin und beschäftige mich seit rund drei Jahren intensiv mit dem Thema Vermögensaufbau.\n[PAUSE]",
+        why: "Kurze, klare Vorstellung. Keine Übertreibung — schafft Glaubwürdigkeit statt Show."
+      },
+      {
+        tones: ["AUTHENTISCH", "BESORGT"],
+        preview: "Mit 16 hab ich gesehen, wie ältere Menschen Pfandflaschen sammeln mussten — und bei meinem Vater, dass harte Arbeit allein keine Sicherheit garantiert.",
+        full: "Der Auslöser war, dass ich schon mit 16 gesehen habe,\nwie ältere Menschen Pfandflaschen sammeln mussten.\n[PAUSE]\nGleichzeitig habe ich bei meinem Vater erlebt,\ndass jahrzehntelange harte Arbeit allein\nkeine finanzielle Sicherheit garantiert.\n[PAUSE]",
+        why: "Emotionaler Ankerpunkt. Eine echte, persönliche Geschichte baut Vertrauen auf, ohne dass du irgendetwas beweisen musst."
+      },
+      {
+        tones: ["KLAR", "RUHIG"],
+        preview: "Die meisten scheitern nicht am Wissen, sondern am fehlenden Plan. Deshalb geht's mir nie ums Verkaufen, sondern ums richtige Ziel.",
+        full: "Genau deshalb führe ich heute solche Gespräche.\n[PAUSE]\nMittlerweile durfte ich schon viele Gespräche mit Menschen führen\nund dabei habe ich gemerkt,\ndass die meisten gar nicht am fehlenden Wissen scheitern,\nsondern daran, dass sie ohne klaren Plan investieren.\n[PAUSE]\nMir geht es deshalb nicht darum,\nMenschen irgendein Produkt zu verkaufen.\nIch möchte zuerst verstehen,\nwelches Ziel jemand erreichen möchte\nund ob wir dafür überhaupt den passenden Weg haben.\n[PAUSE]\nSo viel erst einmal zu mir.",
+        why: "Du positionierst dich als Berater, nicht als Verkäufer. 'Die meisten scheitern nicht am Wissen, sondern am Plan' sät gleichzeitig einen leisen Zweifel — genau das, was du in Phase 2 brauchst."
       },
       {
         tones: ["NEUGIERIG"],
-        preview: "Hol mich mal kurz ab: Wie sieht's aktuell bei dir aus?",
-        full: "Hol mich mal kurz ab:\nWie sieht es aktuell bei dir beim Thema Investments aus?\n[PAUSE]",
+        preview: "Jetzt interessiert mich deine Geschichte: Wer bist du, was machst du aktuell und warum ist Investieren gerade für dich interessant?",
+        full: "Jetzt interessiert mich natürlich deine Geschichte:\nWer bist du, was machst du aktuell\nund warum ist das Thema Investieren gerade für dich interessant?\n[PAUSE]",
         why: "OFFENE FRAGE. Lass ihn reden. Alles was er sagt → Notizen rechts."
       }
     ],
